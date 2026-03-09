@@ -249,7 +249,7 @@ Evidence captured during investigation:
 ## Screenshots
 
 ### Gmail Bounce Back Error
-![Bounce Back](screenshots/bounce-back-error.png)
+![Bounce Back](screenshots/gmail-bounce-back-error.png)
 
 ### Mail Flow Rule Enabled
 ![Rule Enabled](screenshots/mail-flow-rule-enabled.png)
@@ -268,3 +268,4 @@ Evidence captured during investigation:
 - Cloud Infrastructure  
 - Email Security  
 - Enterprise Troubleshooting
+
