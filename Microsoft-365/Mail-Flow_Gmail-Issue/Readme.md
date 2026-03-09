@@ -1,229 +1,270 @@
-# Mail Not Delivered from Gmail (Mail Flow Investigation)
 
-## Ticket Information
-
-- **Category:** Microsoft 365 / Exchange Online / Mail Flow  
-- **Priority:** P2 – High  
-- **Impact:** External communication disruption (Gmail senders)  
-- **SLA Target:** 4 hours  
-- **Resolution Time:** 1 hour 10 minutes  
-- **Status:** Resolved  
+# 📧 Exchange Online Incident Investigation
+## Mail Not Delivered from Gmail (Mail Flow Rule Misconfiguration)
 
 ---
 
-## Scenario
+# 🧾 Incident Summary
 
-**User Reported:**
+A user reported that emails sent from Gmail accounts were not being received in their Microsoft 365 mailbox. Internal emails were functioning normally.
+
+Investigation revealed that a **transport (mail flow) rule** in Exchange Online was configured to **reject messages from the Gmail domain**, causing all Gmail messages to be blocked before reaching the mailbox.
+
+The issue was resolved by **identifying and disabling the misconfigured mail flow rule**.
+
+---
+
+# 🎫 Ticket Information
+
+| Field | Details |
+|-----|-----|
+| Incident ID | LAB-EXO-002 |
+| Category | Microsoft 365 / Exchange Online |
+| Subcategory | Mail Flow |
+| Priority | P2 – High |
+| Impact | External communication disruption |
+| SLA Target | 4 Hours |
+| Resolution Time | 1 Hour 10 Minutes |
+| Status | Resolved |
+
+---
+
+# 🖥 Environment
+
+| Component | Details |
+|------|------|
+| Platform | Microsoft 365 |
+| Service | Exchange Online |
+| Tenant Domain | daizsign.onmicrosoft.com |
+| Mailbox Tested | ehisevans@daizsign.onmicrosoft.com |
+| Admin Portals Used | Exchange Admin Center |
+| Investigation Tools | Message Trace, Mail Flow Rules |
+| Lab Setup | Microsoft 365 Admin Lab |
+
+---
+
+# 🚨 User Report
 
 > “I’m not receiving emails from Gmail addresses.”
 
-The user reported that messages sent from Gmail accounts were not appearing in their inbox. Internal emails were functioning normally.
+The user indicated that emails from Gmail accounts were not appearing in their mailbox.
 
 ---
 
-## Environment
+# 🔎 Initial Symptoms
 
-- **Platform:** Microsoft 365 (Exchange Online)  
-- **Tenant Domain:** daizsign.onmicrosoft.com  
-- **Mailbox Tested:** ehisevans@daizsign.onmicrosoft.com  
-- **Admin Portals Used:**  
-  - Exchange Admin Center (EAC)  
-  - Microsoft Defender Portal  
-- **Mail Flow Rules:** Transport rule configured to block Gmail (lab simulation)  
+Observed behaviour:
 
----
-
-## Initial Symptoms
-
-- Internal emails delivered successfully  
-- External emails from Gmail were rejected due to a transport rule 
-- Emails from Gmail addresses were not delivered  
-- No messages visible in Inbox or Junk folder  
+✔ Internal emails delivered successfully  
+✔ Microsoft 365 tenant operational  
+❌ Emails from Gmail accounts not delivered  
+❌ No messages in Inbox or Junk folder  
 
 Test performed from external Gmail account:
 
 ```
-
-Email sent → No inbox delivery
-
+Email Sent → No Delivery
 ```
 
 ---
 
-## Business Impact
+# 💼 Business Impact
 
-If unresolved, this issue could:
+If unresolved, the issue could:
 
-- Disrupt communication with clients using Gmail  
-- Delay business correspondence  
-- Cause missed deadlines  
-- Impact business reputation  
+- Disrupt communication with Gmail users
+- Delay client correspondence
+- Impact business operations
+- Cause missed deadlines
 
-Mail flow interruptions from major providers like Gmail can significantly affect operations.
-
----
-
-## Investigation Steps
-
-### Step 1 — Confirm Mailbox Functionality
-
-Sent internal test email.
-
-**Result:** Delivered successfully  
-
-Confirmed the mailbox was operational.
+Because Gmail is a **major global email provider**, blocking Gmail senders can significantly affect business communication.
 
 ---
 
-### Step 2 — Perform Message Trace
+# 🧪 Investigation Process
+
+## Step 1 — Confirm Mailbox Functionality
+
+An internal test email was sent.
+
+Result:
+
+```
+Email Delivered Successfully
+```
+
+This confirmed the mailbox itself was functioning correctly.
+
+---
+
+# Step 2 — Perform Message Trace
 
 Navigated to:
 
 ```
-
-Exchange Admin Center → Mail flow → Message trace
-
+Exchange Admin Center
+→ Mail Flow
+→ Message Trace
 ```
 
-Filtered by:
-- Sender: Gmail address  
-- Recipient: ehisevans@daizsign.onmicrosoft.com  
+Filtered results by:
 
-**Result:**
+Sender: Gmail account  
+Recipient: ehisevans@daizsign.onmicrosoft.com
 
-```
-
-Status: Failed
-Action: Rejected
-Reason: Transport rule
+Result:
 
 ```
+Status: Not Delivered
+Reason: Mail Flow Rule
+```
 
-This confirmed the message was being blocked before reaching the mailbox.
+This indicated the email was blocked **during transport processing**.
 
 ---
 
-### Step 3 — Review Mail Flow Rules
+# Step 3 — Review Mail Flow Rules
 
 Navigated to:
 
 ```
-
-Exchange Admin Center → Mail flow → Rules
-
+Exchange Admin Center
+→ Mail Flow
+→ Rules
 ```
 
 Identified rule:
 
 ```
-
-Block Gmail Test
-
+Rule Name: Block Gmail Test
 ```
 
-**Condition:**
-- Sender domain is gmail.com  
+### Rule Configuration
 
-**Action:**
-- Reject message  
+Condition
 
-The rule was enabled.
+```
+Sender domain = gmail.com
+```
+
+Action
+
+```
+Reject the message
+```
+
+The rule was **Enabled**, meaning Exchange Online rejected all Gmail messages.
 
 ---
 
-## Root Cause
+# 🧠 Root Cause
 
-A transport (mail flow) rule had been configured to reject emails originating from:
+A **transport rule** had been configured to block emails from the domain:
 
 ```
-
 gmail.com
-
 ```
 
-Because Gmail matched the rule condition, messages were automatically rejected during mail processing.
+Because Gmail matched the rule condition, Exchange Online rejected the email during mail flow processing.
 
-This was a configuration-based mail flow restriction — not a mailbox issue.
+This was a **policy configuration issue**, not a mailbox problem.
 
 ---
 
-## Resolution Steps
+# 🛠 Resolution
 
-1. Opened:
+Steps taken:
 
-```
-
-Exchange Admin Center → Mail flow → Rules
+1️⃣ Navigated to:
 
 ```
+Exchange Admin Center
+→ Mail Flow
+→ Rules
+```
 
-2. Located the rule:
-   - **Block Gmail Test**
+2️⃣ Located rule
 
-3. Disabled the rule.
+```
+Block Gmail Test
+```
 
-4. Saved configuration changes.
+3️⃣ Disabled the rule
 
-5. Sent a new test email from Gmail account.
+4️⃣ Saved configuration changes
 
 ---
 
-## Verification
+# ✅ Verification
 
-- New Gmail email delivered successfully  
-- Message visible in Inbox  
-- Message trace showed:
+A new test email was sent from a Gmail account.
+
+Result:
+
+✔ Email delivered successfully  
+✔ Message visible in Inbox  
+✔ Message trace status:
 
 ```
-
 Status: Delivered
-
 ```
 
-- User confirmed successful receipt  
+User confirmed successful receipt.
 
 Mail flow restored.
 
 ---
 
-## Skills Demonstrated
+# 🧠 Lessons Learned
 
-- Exchange Online mail flow troubleshooting  
-- Message Trace analysis  
-- Transport rule investigation  
-- Microsoft 365 admin portal navigation  
-- Structured root cause identification  
-- Business-impact awareness  
+Transport rules in Exchange Online can override normal mailbox delivery behaviour.
 
----
+When users report missing external emails, administrators should:
 
-## Key Takeaway
+1️⃣ Perform a **Message Trace**  
+2️⃣ Review **Mail Flow Rules**  
+3️⃣ Check **Anti-Spam Policies**  
+4️⃣ Review **Quarantine**
 
-Transport rules in Exchange Online can override normal mailbox delivery behavior.
-
-When users report missing external emails:
-
-1. Perform a Message Trace  
-2. Review mail flow (transport) rules  
-3. Check anti-spam policies  
-4. Verify quarantine before escalating  
-
-Structured troubleshooting prevents unnecessary mailbox reconfiguration and quickly identifies policy-based blocks.
-```
+Following a structured troubleshooting process helps identify configuration issues quickly.
 
 ---
 
-This version is:
+# 🛠 Skills Demonstrated
 
-* Clean
-* Structured
-* GitHub-friendly
-* Professional
-* Recruiter-readable
-* ATS-friendly
+- Exchange Online Administration
+- Microsoft 365 Troubleshooting
+- Mail Flow Investigation
+- Message Trace Analysis
+- Transport Rule Configuration
+- IT Incident Handling
+- Root Cause Analysis
 
-If you’d like, I can now:
+---
 
-* Create a reusable master template for all 30 tickets
-* Write your full GitHub README
-* Structure your entire repository like a real enterprise documentation project
+# 📂 Screenshots
+
+Evidence captured during investigation:
+
+## Screenshots
+
+### Gmail Bounce Back Error
+![Bounce Back](screenshots/bounce-back-error.png)
+
+### Mail Flow Rule Enabled
+![Rule Enabled](screenshots/mail-flow-rule-enabled.png)
+
+### Message Trace Failure
+![Message Trace](screenshots/message-trace-delivery-failure.png)
+
+### Mail Flow Rule Disabled
+![Rule Disabled](screenshots/mail-flow-rule-disabled.png)
+---
+
+# 🔗 Related Skills
+
+- Microsoft 365 Administration  
+- Exchange Online  
+- Cloud Infrastructure  
+- Email Security  
+- Enterprise Troubleshooting
