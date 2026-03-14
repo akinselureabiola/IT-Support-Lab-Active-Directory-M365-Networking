@@ -82,6 +82,7 @@ It shows the relationship between:
 - **LINUX-SRV01** (Linux server)
 
 All systems communicate within the **192.168.10.0/24 LABNET internal network**.
+
 ---
 
 # Linux Server Deployment
