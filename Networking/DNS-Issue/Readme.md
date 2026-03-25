@@ -1,33 +1,33 @@
-# DNS Resolution Failure in Active Directory
+# DNS Resolution Failure - Active Directory Lab
 
 ## Ticket Information
 
 - **Category:** Networking / Active Directory / DNS  
 - **Priority:** P2 – High  
-- **Impact:** Single user unable to access domain resources  
+- **Impact:** User unable to access domain resources via hostname  
 - **SLA Target:** 4 hours  
-- **Resolution Time:** 45 minutes (within SLA)  
+- **Resolution Time:** 45 minutes
 - **Status:** Resolved  
 
 ---
 
-## Scenario
+## Incident Overview
 
-**User Reported:**
+A user reported inability to access internal resources using the server hostname, while direct IP connectivity was successful.
 
-> “I can ping the server IP but not the server name.”
+“I can ping the server IP, but not the server name.”
 
-The user was unable to access internal resources using hostname, but confirmed that the server IP address was reachable.
+This indicated a likely DNS resolution issue within the Active Directory environment.
 
 ---
 
-## Environment
+## Lab Environment
 
 - **Domain:** bpurple.com  
 - **Domain Controller:** DC01 (192.168.10.10)  
-- **Client Machine:** CLIENT01 (Domain-joined)  
-- **Virtualization:** VirtualBox (Internal Network + NAT)  
-- **DNS Server:** 192.168.10.10  
+- **Client Machine:** CLIENT01 (192.168.10.20)    
+- **DNS Server:** 192.168.10.10
+- **Virtualization:** VirtualBox (Internal Network + NAT) 
 
 ---
 
@@ -42,43 +42,26 @@ The user was unable to access internal resources using hostname, but confirmed t
 On CLIENT01:
 
 ```bash
-ping 192.168.10.10        # Successful
+ping 192.168.10.10        # Success
 ping dc01.bpurple.com     # Failed
 nslookup dc01             # Failed
 ```
 
-Network connectivity was confirmed, but hostname resolution was not functioning.
+Network connectivity was working, but DNS resolution was failing.
 
 ---
 
-## Evidence — Issue Identification
-
-### ❌ Hostname Resolution Failure
-![DNS Failure](./screenshots/dns-failure.png)
-
-### ❌ Incorrect DNS Configuration
-![Wrong DNS](./screenshots/wrong-dns-config.png)
-
 ---
 
-## Business Impact
+## Investigation Process
 
-- Domain authentication may fail  
-- Group Policy processing may break  
-- File shares may become inaccessible  
-- Applications relying on hostname resolution may fail  
-
----
-
-## Investigation Steps
-
-### Step 1 — Validate Network Connectivity
+### Step 1 — Confirm Network Connectivity
 
 ```bash
 ping 192.168.10.10
 ```
 
-✅ Result: Successful  
+✅ Result: Successful → Network is reachable
 
 ---
 
@@ -88,7 +71,7 @@ ping 192.168.10.10
 nslookup dc01.bpurple.com
 ```
 
-❌ Result:
+❌ Result: Failed → DNS issue suspected
 
 ```
 *** can't find dc01: Non-existent domain
@@ -96,7 +79,7 @@ nslookup dc01.bpurple.com
 
 ---
 
-### Step 3 — Inspect DNS Configuration
+### Step 3 — Validate DNS Configuration
 
 ```bash
 ipconfig /all
@@ -114,7 +97,7 @@ DNS Servers . . . . . . . : 8.8.8.8
 
 ## 🧠 Root Cause
 
-CLIENT01 was using:
+The client machine was configured to use:
 
 ```
 8.8.8.8 (External DNS)
@@ -123,36 +106,44 @@ CLIENT01 was using:
 Instead of:
 
 ```
-192.168.10.10 (Domain Controller)
+192.168.10.10 (Internal Domain Controller)
 ```
 
-External DNS cannot resolve internal AD records.
+External DNS cannot resolve internal Active Directory records.
 
 ---
 
 ## 🛠️ Resolution Steps
 
-1. Open:
+1. Open Network Settings:
 
 ```bash
 ncpa.cpl
 ```
 
-2. Go to Adapter → Properties  
-3. Edit IPv4 settings  
-4. Set DNS to:
+2. Navigate to Adapter → Properties  
+3. IPv4 settings  
+4. Update DNS server to preferred DNS:
 
 ```
 192.168.10.10
 ```
 
-5. Flush DNS:
+5. Flush DNS Cache:
 
 ```bash
 ipconfig /flushdns
 ```
 
 ---
+
+## Evidence — Issue Identification
+
+### ❌ DNS Misconfiguration
+![Wrong DNS](./screenshots/wrong-dns-config.png)
+
+### ❌ Failed Resolution
+![DNS Failure](./screenshots/dns-failure.png)
 
 ## 📸 Evidence — Resolution & Validation
 
@@ -167,8 +158,8 @@ ipconfig /flushdns
 ## ✅ Verification
 
 - Hostname resolution successful  
-- Ping to domain name successful  
-- Shared folder accessible:
+- Ping via hostname successful  
+- Domain resources accessible:
 
 ```
 \\DC01\Finance-Share
@@ -178,29 +169,38 @@ ipconfig /flushdns
 
 ---
 
+## Business Impact
+If unresolved, this issue could result in:
+- Domain authentication failure
+- Group Policy processing issues
+- Inaccessible shared resources (e.g file shares)
+- Applications failures due to hostname resolution issues
+
 ## Skills Demonstrated
 
-- DNS troubleshooting (Active Directory)  
+- DNS troubleshooting in Active Directory 
 - Network vs DNS issue isolation  
-- Command-line diagnostics  
+- Command-line diagnostics (ping, nslookup, ipconfig)
 - Root cause analysis  
-- Structured troubleshooting  
+- Structured troubleshooting approach
 
 ---
 
 ## Key Takeaway
 
-Active Directory relies heavily on **internal DNS**.
+Active Directory environments rely heavily on internal DNS infrastructure.
 
-Using external DNS will break:
+Using external DNS (e.g., 8.8.8.8) will break:
 - Authentication  
-- Group Policy  
+- Domain communication
 - Resource access  
 
 ---
 
 ## Conclusion
 
-The issue was caused by incorrect DNS configuration.  
-Updating the DNS server to the domain controller restored full functionality.
-This issue demonstrates the importance of proper DNS configuration in Active Directory environments and reflects a common real-world L1/L2 support scenario.
+The issue was caused by incorrect DNS configuration on the client machine, where an external DNS server was used instead of the internal domain controller.
+
+Updating the DNS settings to point to the domain controller restored proper name resolution and full access to domain resources.
+
+This scenario highlights the critical role of DNS in Active Directory environments, where misconfiguration can directly impact authentication, Group Policy processing, and access to shared resources.
