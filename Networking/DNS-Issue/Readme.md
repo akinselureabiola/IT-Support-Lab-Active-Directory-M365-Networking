@@ -170,6 +170,7 @@ ipconfig /flushdns
 ---
 
 ## Business Impact
+
 If unresolved, this issue could result in:
 - Domain authentication failure
 - Group Policy processing issues
