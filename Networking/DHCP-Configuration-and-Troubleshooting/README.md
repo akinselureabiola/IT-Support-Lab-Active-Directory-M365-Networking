@@ -335,8 +335,3 @@ In a production environment, I would also:
 
 This ensures the issue is not part of a larger network problem.
 
----
-
-## 🔗 Project Link
-
-👉 [GitHub Repository](https://github.com/akinselureabiola/IT-Support-Infrastructure-Lab-Portfolio)

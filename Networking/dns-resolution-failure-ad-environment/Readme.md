@@ -1,4 +1,6 @@
-# DNS Resolution Failure in Active Directory
+# DNS Resolution Failure in Active Directory (Real-World IT Support Scenario)
+
+This lab simulates a real-world IT support scenario where a DNS misconfiguration prevents hostname resolution in an Active Directory environment.
 
 ## Ticket Information
 
