@@ -2,81 +2,113 @@
 
 ## Overview
 
-I built this Python project to simulate a simple IT support scenario where repeated issues need to be analyzed.
+I built this project to simulate a simple IT support task using Python.
 
-In most IT support environments, we deal with a lot of recurring problems like password resets, login issues, VPN connection problems, etc. I wanted to see how I could use Python to quickly analyze these issues and spot patterns.
+In IT support, many user issues tend to repeat over time. Problems like VPN connection failures, password resets, login issues, and mailbox access requests often come up again and again. I wanted to create a small script that could help analyze those recurring issues instead of reviewing them manually one by one.
 
-This project reads a list of IT support issues from a file, counts how often each one appears, and shows the results. It also saves the output into a file so it can be used as a simple report.
+This project reads IT support issue data from a CSV file, counts how often each issue appears, saves the results into a separate CSV file, and also generates a simple bar chart to make the findings easier to understand.
 
 ---
 
 ## Why I Built This
 
-While working in IT support, I noticed that many issues come up again and again. Instead of going through tickets manually, I thought it would be useful to automate a basic way to:
+While working in IT support and also practicing in my labs, I noticed that the same kinds of incidents appear repeatedly. That made me think about how small automation can help make support work more efficient.
 
-- Identify the most common issues
-- Understand what users struggle with the most
-- Get a simple overview of recurring problems
+The goal of this project was to build something simple and practical that could:
 
-This project is a small step towards using automation to support everyday IT tasks.
+- show the most common support issues
+- help identify recurring patterns
+- simulate a basic reporting process
+- connect Python with a real IT support use case
 
----
-
-## How It Works
-
-1. A text file (`support_issues.txt`) contains a list of issues (one per line)
-2. The script reads all the issues from the file
-3. It counts how many times each issue appears
-4. The results are displayed in the terminal (sorted by frequency)
-5. The results are also saved into a file (`results.txt`)
+I wanted this project to stay simple enough to understand clearly, but still feel close to something that could be useful in a real support environment.
 
 ---
 
-## Sample Input
+## What the Project Does
 
-```
+The script performs four main tasks:
 
-Login issue
-Password reset
-Outlook not opening
-Wi-Fi issue
-Login issue
-Password reset
-VPN not connecting
+1. Reads issue data from a CSV file (`support_issues.csv`)
+2. Extracts and counts how many times each issue appears
+3. Displays the results in ranked order in the terminal
+4. Saves the ranked results into a CSV file (`results.csv`)
+5. Generates a bar chart (`issue_chart.png`) to visualize the most common support issues
 
-```
+---
+
+## Dataset Used
+
+The input file for this project is `support_issues.csv`.
+
+It contains simulated IT support issue records with two fields:
+
+- `timestamp`
+- `issue`
+
+I used a structured CSV format instead of a plain text file so the project would feel more realistic and closer to how support data might be stored or exported in a real environment.
+
+Example:
+
+```csv
+timestamp,issue
+2026-03-31 08:15,Login issue
+2026-03-31 08:22,Password reset
+2026-03-31 08:35,Outlook not opening
+````
 
 ---
 
 ## Sample Output
 
-```
+When the script runs, it displays the ranked issue counts in the terminal and saves the same results into `results.csv`.
 
-1. Password reset: 14
-2. Login issue: 11
-3. Wi-Fi issue: 9
-4. VPN not connecting: 9
-5. Shared mailbox access: 7
-6. Outlook not opening: 6
-7. MFA setup issue: 5
+Example output:
 
+```text
+1. VPN not connecting: 29
+2. MFA setup issue: 26
+3. Login issue: 25
+4. Password reset: 22
+5. Outlook not opening: 17
+6. Wi-Fi issue: 17
+7. Shared mailbox access: 14
 ```
 
 ---
 
-## Key Features
+## Visualization
 
-- Reads IT support issues from a file
-- Counts repeated issues using Python
-- Displays results in a ranked format
-- Saves output into a file for reference
+To make the results easier to understand, I added a simple bar chart that shows the most common IT support issues.
+
+This helped turn the project from just a counting script into something closer to a small reporting tool. It also makes it easier to quickly see which problems occur most often.
+
+The chart is automatically generated and saved as:
+
+* `issue_chart.png`
+
+---
+
+## Files in This Project
+
+```text
+Python-Automation-for-IT-Support-Tasks/
+│
+├── issue_analyzer.py
+├── support_issues.csv
+├── results.csv
+├── issue_chart.png
+└── README.md
+```
 
 ---
 
 ## Technologies Used
 
-- Python
-- `collections.Counter`
+* Python
+* `csv`
+* `collections.Counter`
+* `matplotlib`
 
 ---
 
@@ -84,55 +116,59 @@ VPN not connecting
 
 While building this project, I improved my understanding of:
 
-- Reading and processing files in Python
-- Using `Counter` to analyze simple datasets
-- Structuring code using functions
-- Thinking about how automation can be applied in IT support
+* reading structured data from CSV files
+* using `Counter` to analyze repeated issues
+* organizing Python code into small functions
+* saving processed results into a new file
+* visualizing issue trends using a chart
+* thinking about how automation can support everyday IT tasks
 
-It also helped me connect Python with real support tasks instead of just learning it in theory.
-
----
-
-## Possible Improvements
-
-If I continue working on this, I would like to:
-
-- Use a CSV file instead of a text file
-- Add timestamps to analyze trends over time
-- Visualize the data (charts or graphs)
-- Connect it to real ticketing systems (like Jira or ServiceNow)
+More importantly, this project helped me apply Python in a way that connects directly to IT support instead of just practicing syntax.
 
 ---
 
-## How to Run
+## How to Run the Project
 
 1. Make sure Python is installed
-2. Place your `support_issues.txt` file in the same folder
-3. Run:
+2. Make sure the required files are in the same folder
+3. Install matplotlib if needed:
 
+```bash
+pip install matplotlib
 ```
 
-python3 issue_analyzer.py
+4. Run the script:
 
+```bash
+python3 issue_analyzer.py
 ```
 
 ---
 
-## Project Structure
+## Expected Results
 
-```
+After running the script, you should get:
 
-Python-Automation-for-IT-Support-Tasks/
-│
-├── issue_analyzer.py
-├── support_issues.txt
-├── results.txt
-└── README.md
+* ranked issue counts shown in the terminal
+* a `results.csv` file with the summarized output
+* an `issue_chart.png` file showing the issue frequency visually
 
-```
+---
+
+## Future Improvements
+
+If I continue improving this project, I would like to:
+
+* analyze issue trends by date
+* filter results by time period
+* create multiple charts for better reporting
+* connect the script to real exported ticket data
+* extend it to support more issue categories
 
 ---
 
 ## Final Note
 
-This project is part of my learning process in IT support and automation. The idea is to keep building small, practical solutions that reflect real-world support scenarios.
+This project is part of my hands-on learning in IT support, automation, and troubleshooting.
+
+My goal with it was not to build something overly complex, but to create a practical script that reflects the kind of repeated issue analysis that can happen in real support environments. It was also a good way for me to combine Python with a support-focused problem in a simple and useful way.

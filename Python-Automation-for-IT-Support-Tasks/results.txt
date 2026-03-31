@@ -1,7 +1,0 @@
-Password reset: 14
-Login issue: 11
-Wi-Fi issue: 9
-VPN not connecting: 9
-Shared mailbox access: 7
-Outlook not opening: 6
-MFA setup issue: 5

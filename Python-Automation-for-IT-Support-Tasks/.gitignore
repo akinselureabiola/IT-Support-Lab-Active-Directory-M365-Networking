@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Mac system files
+.DS_Store
+
+# Output files (optional)
+# Uncomment if you don’t want to push generated files
+# results.csv
+# issue_chart.png
+
+# VS Code settings (optional)
+.vscode/
