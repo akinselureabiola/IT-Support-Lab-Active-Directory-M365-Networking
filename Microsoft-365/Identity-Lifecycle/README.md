@@ -275,4 +275,4 @@ This lab simulates a real IT onboarding and offboarding task performed in enterp
 
 Beyond executing commands, the focus was on validating results, troubleshooting issues, and ensuring that access was correctly provisioned and revoked.
 
-This reflects the day-to-day responsibilities of an IT Support or Junior System Administrator.
+This reflects the day-to-day responsibilities of an IT Support or Junior System Administrator.  
