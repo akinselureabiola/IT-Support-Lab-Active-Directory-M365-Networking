@@ -1,75 +1,110 @@
+## 💼 About Me
+
+I’m an IT Support-focused professional with hands-on experience troubleshooting Active Directory, Microsoft 365, and Windows environments.
+
+I enjoy breaking down technical issues, finding root causes, and helping users get back to work quickly.
+
+This portfolio highlights the type of real-world support scenarios I’ve worked through while building practical experience.
+
 # IT Support Portfolio – Active Directory, Microsoft 365 & Networking
 
-This repository showcases my hands-on IT Support practice across Active Directory, Microsoft 365, networking, and Windows environments.
+This repository showcases the hands-on labs and support scenarios I’ve worked through while practicing real IT support tasks.
 
-It is designed to simulate real-world IT support scenarios, focusing on user support, incident handling, and troubleshooting in a small company setup.
+The focus here isn’t just on setting things up — it’s about troubleshooting issues the way they happen in real environments: understanding the problem, identifying the root cause, and resolving it properly.
 
 ---
 
 ## Overview
 
-This portfolio reflects the type of day-to-day tasks handled in IT Support roles, including resolving user issues, managing accounts, troubleshooting systems, and supporting workplace environments.
+This portfolio reflects the kind of day-to-day work handled in IT Support roles, including:
 
-The goal is to demonstrate practical experience in handling common IT problems using a structured and logical approach.
+* Supporting users with login and access issues
+* Managing accounts in Active Directory and Microsoft 365
+* Troubleshooting Windows system problems
+* Investigating network issues (DNS, connectivity, access)
+* Resolving real-world scenarios like shared folder access, slow systems, and update failures
 
----
-
-## Lab Environment
-
-The environment used in this lab includes:
-
-- Windows Server (Active Directory Domain Controller)
-- Windows client machine (user workstation simulation)
-- Ubuntu Linux server
-- Internal virtual network (VirtualBox)
-
-This setup allows me to simulate real IT environments where users, devices, and network services interact.
+Each lab is structured like a real support ticket — starting from the user’s issue through to investigation, root cause, and resolution.
 
 ---
 
-## Skills Demonstrated
+## 🖥️ Lab Environment
 
-- Active Directory user and group management  
-- Microsoft 365 administration (user access, MFA, mailbox support)  
-- Incident handling and user support  
-- Windows system troubleshooting  
-- Network troubleshooting (DNS, connectivity, access issues)  
-- Basic Group Policy configuration  
+To simulate a realistic working environment, I built a small lab using:
 
----
+* Windows Server (Domain Controller with Active Directory & DNS)
+* Windows client machine (user workstation simulation)
+* Ubuntu Linux server
+* VirtualBox internal network
 
-## Example IT Support Scenarios
-
-The lab includes practical scenarios such as:
-
-- User unable to log in or access resources  
-- Password reset and account access issues  
-- Microsoft 365 login and mailbox problems  
-- Shared folder and permission issues  
-- Network connectivity and DNS resolution problems  
-- Automated drive mapping using Group Policy  
+This setup allows me to test how users, systems, and network services interact in a controlled environment.
 
 ---
 
-## Troubleshooting Approach
+## 🧑‍💻 Skills Practiced
 
-Each scenario is handled using a structured troubleshooting method:
+Across these labs, I’ve worked on:
 
-1. Identify the issue  
-2. Gather relevant information  
-3. Check system and network connectivity  
-4. Investigate configurations and settings  
-5. Determine the root cause  
-6. Apply a fix and verify resolution  
+* Managing users, groups, and access in Active Directory
+* Handling Microsoft 365 user accounts, licensing, and mailbox issues
+* Troubleshooting Windows systems (performance, updates, malware)
+* Diagnosing network issues (DNS, DHCP, VPN, connectivity problems)
+* Configuring Group Policy for drive mapping and access control
+* Investigating Exchange Online and Outlook-related issues
+* Testing basic Linux integration within an Active Directory environment
+* Following a structured approach to troubleshooting and incident handling
+* Using PowerShell and Python for simple automation tasks
 
 ---
 
-## Purpose
+## 🔍 Example Scenarios
 
-This portfolio is built to demonstrate my ability to think and work like an IT Support professional by:
+Some of the real-world issues I worked through include:
 
-- Handling real-world user issues  
-- Following structured troubleshooting processes  
-- Documenting problems and solutions clearly  
+* User unable to log in to the domain
+* Shared folder showing “Access Denied”
+* Microsoft 365 login or mailbox issues
+* DNS not resolving internal resources
+* VPN connected but no access to internal systems
+* Windows Update failing to install
+* Slow system performance
+* Malware detection and cleanup
 
-It reflects the skills required for entry-level IT Support and Helpdesk roles in enterprise environments.
+---
+
+## ⚙️ How I Approach Problems
+
+For each issue, I follow a simple and consistent process:
+
+1. Understand what the user is experiencing
+2. Check the basics (connectivity, system status)
+3. Investigate configurations and settings
+4. Identify the root cause
+5. Apply a fix
+6. Verify everything is working as expected
+
+---
+
+## 🎯 Purpose
+
+I built this portfolio to practice working like an IT Support professional.
+
+Instead of just learning concepts, I focused on:
+
+* Solving real scenarios step by step
+* Understanding why issues happen
+* Documenting the troubleshooting process clearly
+* Building confidence in handling real support tasks
+
+---
+
+## 🚀 Where to Start
+
+If you're reviewing this portfolio for IT Support or Junior SysAdmin roles, these are good starting points:
+
+* Active Directory File Server Access Troubleshooting
+* Microsoft 365 Identity Lifecycle Automation
+* DNS Resolution Failure in Active Directory
+* DHCP IP Assignment Issue
+* Exchange Online Incident Investigation
+* Python Automation for IT Support Tasks
