@@ -1,4 +1,4 @@
-# 🔧 DHCP Configuration & Troubleshooting Lab (Real-World Scenario)
+# 🔧 DHCP IP Assignment Issue – Configuration & Troubleshooting Lab
 
 ### Simulating Real-World IP Assignment and Network Validation in Windows Server
 
@@ -6,19 +6,18 @@
 
 ## 🎯 Objective
 
-The goal of this lab was to configure a working DHCP server in a Windows Server environment and simulate a real-world scenario where a client fails to obtain an IP address.
+In this lab, I configured a DHCP server and investigated a scenario where a client was unable to obtain an IP address.
 
-Rather than just setting up DHCP, this lab focuses on:
-
-* How DHCP works in an enterprise network  
-* How to troubleshoot IP assignment issues  
-* How DHCP integrates with Active Directory and DNS  
-
-This lab also demonstrates a structured, support-style approach to identifying and resolving DHCP-related issues in a controlled environment.
+The goal was to identify the root cause and restore proper network connectivity using a structured troubleshooting approach.
 
 ---
 
-🧾 Incident Summary
+## 🧾 Incident Summary
+
+A client machine was unable to obtain an IP address from the DHCP server, preventing access to network resources.
+
+The issue was investigated and resolved by validating DHCP configuration and retriggering the lease process.
+
 
 | Field      | Details                                 |
 | ---------- | --------------------------------------- |
@@ -31,17 +30,13 @@ This lab also demonstrates a structured, support-style approach to identifying a
 
 ---
 
-## 🧾 Scenario (Real-World Context)
+## 🧾 Scenario
 
-A user reports:
+In this lab, I simulated a support case where a user reported:
 
 > “My system is connected to the network, but I’m not getting an IP address.”
 
-This is a common issue in enterprise environments and can affect:
-
-* Network access
-* Domain login
-* Internet connectivity
+This type of issue is common in enterprise environments and can prevent users from accessing internal resources or logging into the domain.
 
 ---
 
@@ -115,10 +110,11 @@ Configured:
 
 ## 🚨 Incident Simulation
 
-To simulate a real support issue:
+## 🚨 Incident Simulation
 
-* The client was switched from static IP to DHCP
-* Attempted to release and renew IP
+To simulate the issue, I configured the client to use DHCP and attempted to obtain an IP address.
+
+commands used:
 
 ```bash
 ipconfig /release
@@ -129,18 +125,19 @@ ipconfig /renew
 
 ## ❗ Observed Issue
 
-* Client failed to obtain IP address initially
-* Error:
+The client failed to obtain an IP address.
 
-  > “An address has not yet been associated with the network endpoint”
+Error observed:
+
+> “An address has not yet been associated with the network endpoint”
 
 ![IP Address Error](./screenshots/dhcp-release-error.png)
 
 ---
 
-## 🔍 Troubleshooting Approach
+## 🔍 Troubleshooting Process
 
-A structured, step-by-step approach was used.
+I followed a structured troubleshooting approach, starting from client-side checks and moving toward DHCP server validation.
 
 ---
 
@@ -203,124 +200,110 @@ Once the DHCP process was retriggered, the client was able to successfully obtai
 
 ---
 
-## ✅ Resolution
+## 🧠 Root Cause
 
-* Ensured client was set to:
+The issue occurred because the client had just been switched from a static IP configuration to DHCP and did not yet have a valid lease.
 
-  * Obtain IP automatically
-  * Obtain DNS automatically
-* Renewed DHCP lease
-* Verified DHCP scope and options
+Without a valid IP address, the client could not properly communicate with the DHCP server, causing the initial request to fail.
+
+Once the DHCP process was retriggered, the client successfully obtained an IP address.
 
 ---
 
-## 🧪 Validation & Testing
+## 🛠 Resolution
 
-### ✅ IP Assignment
+To resolve the issue, I ensured the client was configured to:
 
-```bash
-ipconfig
-```
+- Obtain an IP address automatically  
+- Obtain DNS server automatically  
 
-✔ IP assigned: `192.168.10.100`
-✔ Subnet correct
-✔ DNS suffix applied
+I then renewed the DHCP lease using:
+
+ipconfig /renew  
+
+This allowed the client to successfully obtain an IP address from the DHCP server.
+
+---
+
+## ✅ Validation
+
+### IP Assignment
+
+ipconfig  
+
+The client received a valid IP address within the configured DHCP scope.
 
 ![IP Assignment Validation](./screenshots/final-ipconfig.png)
 
 ---
 
-### ✅ Connectivity Tests
+### Connectivity Test
 
-```bash
-ping 192.168.10.10
-ping dc01.bpurple.com
-```
+ping 192.168.10.10  
+ping dc01.bpurple.com  
 
-✔ Successful — confirms:
+Both tests were successful, confirming:
 
-* Network connectivity
-* DNS resolution
+- Network connectivity  
+- DNS resolution  
 
 ![Domain Connectivity Verification](./screenshots/ping-dc-success.png)
 
 ---
 
-### ⚠️ Gateway Test
+### Gateway Test
 
-```bash
-ping 192.168.10.1
-```
+ping 192.168.10.1  
 
-❌ Result: Destination host unreachable
+Result: Destination host unreachable  
 
 ![Gateway Connectivity Failure](./screenshots/ping-gateway-fail.png)
 
+This was expected, as there is no router configured in the lab environment.
+
+Internal communication works correctly, but external routing is not available.
+
 ---
 
-## 🧠 Explanation (Important Insight)
+## 🧠 Observation
 
-The gateway was configured in DHCP, but:
+The gateway was configured via DHCP as 192.168.10.1, but there is no actual router in this lab environment using that address.
 
-> There is no actual router device in this lab environment using `192.168.10.1`
+As a result:
 
-This means:
+- Internal communication within the lab network works  
+- External routing is not available  
 
-* Internal communication works ✅
-* External routing is not available ❌
-
-This is expected behavior in a lab setup.
+This is expected behavior in an isolated lab setup.
 
 ---
 
 ## 🧠 Key Takeaways
 
-* DHCP automates IP configuration in enterprise networks
-* DNS must point to the Domain Controller in AD environments
-* DHCP options (gateway, DNS) are critical for functionality
-* A client without a valid lease cannot communicate properly
-* Not all “errors” are misconfigurations — some are environment limitations
+This lab helped reinforce how DHCP works in a real environment and how small configuration changes can affect client connectivity.
+
+It also showed the importance of verifying both client-side and server-side settings when troubleshooting IP assignment issues.
+
+Finally, it highlighted that not all errors indicate misconfiguration — sometimes they are expected based on how the environment is designed.
 
 ---
 
 ## 🔧 Skills Demonstrated
 
-* DHCP installation and configuration
-* Scope creation and management
-* DHCP authorization in Active Directory
-* Network troubleshooting
-* Client connectivity diagnostics
-* Understanding of real vs lab environments
+- Configured and authorized a DHCP server in a Windows Server environment  
+- Created and managed DHCP scopes and options  
+- Investigated IP assignment issues on a client machine  
+- Diagnosed DHCP lease failures using command-line tools  
+- Verified network connectivity and DNS resolution  
+- Applied structured troubleshooting to identify and resolve the issue  
 
 ---
 
 ## 💼 Real-World Relevance
 
-In production environments, DHCP issues can:
+DHCP issues are common in enterprise environments and can prevent users from accessing the network or logging into the domain.
 
-* Prevent users from accessing the network
-* Block domain authentication
-* Cause widespread outages
-
-Being able to:
-
-* Diagnose DHCP issues
-* Validate configurations
-* Understand network behavior
-
-…is a key skill for IT Support and System Administration roles.
-
----
-
-## 🚀 Final Reflection
-
-This lab was not just about configuring DHCP.
-
-It was about:
-
-* Thinking like a support engineer
-* Investigating issues step by step
-* Understanding how systems interact
+Being able to quickly diagnose and resolve IP assignment issues is an essential skill for IT support and system administration roles.
 
 ---
 

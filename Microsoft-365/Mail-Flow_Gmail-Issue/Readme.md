@@ -6,11 +6,11 @@
 
 # 🧾 Incident Summary
 
-A user reported that emails sent from Gmail accounts were not being received in their Microsoft 365 mailbox. Internal emails were functioning normally.
+In this lab, I investigated an issue where emails sent from Gmail accounts were not being delivered to a Microsoft 365 mailbox, while internal emails were working normally.
 
-Investigation revealed that a **transport (mail flow) rule** in Exchange Online was configured to **reject messages from the Gmail domain**, causing all Gmail messages to be blocked before reaching the mailbox.
+After analyzing the issue, I found that a mail flow (transport) rule was blocking messages from the Gmail domain.
 
-The issue was resolved by **identifying and disabling the misconfigured mail flow rule**.
+I resolved the issue by identifying and disabling the misconfigured rule, which restored normal email delivery.
 
 ---
 
@@ -45,9 +45,7 @@ The issue was resolved by **identifying and disabling the misconfigured mail flo
 
 # 🚨 User Report
 
-> “I’m not receiving emails from Gmail addresses.”
-
-The user indicated that emails from Gmail accounts were not appearing in their mailbox.
+A user reported that they were not receiving emails from Gmail addresses.
 
 ---
 
@@ -62,6 +60,8 @@ Observed behaviour:
 
 Test performed from external Gmail account:
 
+![Bounce Back Error](screenshots/gmail-bounce-back-error.png)
+
 ```
 Email Sent → No Delivery
 ```
@@ -70,22 +70,21 @@ Email Sent → No Delivery
 
 # 💼 Business Impact
 
-If unresolved, the issue could:
+In a real environment, this issue would prevent users from receiving emails from Gmail accounts, which could disrupt communication with clients or external partners.
 
-- Disrupt communication with Gmail users
-- Delay client correspondence
-- Impact business operations
-- Cause missed deadlines
+Since Gmail is widely used, blocking messages from this domain could lead to missed emails, delays in communication, and increased support requests.
 
-Because Gmail is a **major global email provider**, blocking Gmail senders can significantly affect business communication.
+Even though the issue affected only external mail flow, it had a high impact due to the number of users relying on Gmail.
 
 ---
 
 # 🧪 Investigation Process
 
+I followed a structured troubleshooting approach, starting with basic checks and then moving deeper into mail flow analysis.
+
 ## Step 1 — Confirm Mailbox Functionality
 
-An internal test email was sent.
+To make sure the issue wasn’t with the mailbox itself, I sent a test email from another internal user.
 
 Result:
 
@@ -93,11 +92,13 @@ Result:
 Email Delivered Successfully
 ```
 
-This confirmed the mailbox itself was functioning correctly.
+This confirmed that the mailbox was working correctly and the issue was specific to external emails.
 
 ---
 
 # Step 2 — Perform Message Trace
+
+Next, I checked how the email was being processed in Exchange Online.
 
 Navigated to:
 
@@ -112,6 +113,8 @@ Filtered results by:
 Sender: Gmail account  
 Recipient: ehisevans@daizsign.onmicrosoft.com
 
+![Message Trace Failure](screenshots/message-trace-delivery-failure.png)
+
 Result:
 
 ```
@@ -119,11 +122,13 @@ Status: Not Delivered
 Reason: Mail Flow Rule
 ```
 
-This indicated the email was blocked **during transport processing**.
+This indicated that the message was being blocked during mail flow processing, so I moved on to review transport rules.
 
 ---
 
 # Step 3 — Review Mail Flow Rules
+
+I then checked if any transport rules were affecting external email delivery.
 
 Navigated to:
 
@@ -133,139 +138,85 @@ Exchange Admin Center
 → Rules
 ```
 
-Identified rule:
+I identified the following rule:
 
 ```
 Rule Name: Block Gmail Test
 ```
+![Mail Flow Rule Enabled](screenshots/mail-flow-rule-enabled.png)
 
 ### Rule Configuration
 
-Condition
+Condition:
 
 ```
 Sender domain = gmail.com
 ```
 
-Action
+Action:
 
 ```
 Reject the message
 ```
 
-The rule was **Enabled**, meaning Exchange Online rejected all Gmail messages.
+Since the rule was enabled, Exchange Online was rejecting all emails coming from Gmail.
 
 ---
 
 # 🧠 Root Cause
 
-A **transport rule** had been configured to block emails from the domain:
+The issue was caused by a transport rule that was configured to block emails from the domain:
 
-```
-gmail.com
-```
+gmail.com  
 
-Because Gmail matched the rule condition, Exchange Online rejected the email during mail flow processing.
+Because the sender matched this condition, Exchange Online rejected the message during mail flow processing.
 
-This was a **policy configuration issue**, not a mailbox problem.
+This confirmed that the issue was related to configuration, not mailbox or user settings.
 
 ---
 
 # 🛠 Resolution
 
-Steps taken:
+To resolve the issue, I navigated to the Exchange Admin Center and located the mail flow rule named:
 
-1️⃣ Navigated to:
+Block Gmail Test  
 
-```
-Exchange Admin Center
-→ Mail Flow
-→ Rules
-```
+I disabled the rule and saved the changes.
 
-2️⃣ Located rule
+![Mail Flow Rule Disabled](screenshots/mail-flow-rule-disabled.png)
 
-```
-Block Gmail Test
-```
-
-3️⃣ Disabled the rule
-
-4️⃣ Saved configuration changes
+This allowed emails from Gmail to pass through the transport pipeline normally.
 
 ---
 
 # ✅ Verification
 
-A new test email was sent from a Gmail account.
+After disabling the rule, I tested the fix by sending another email from a Gmail account.
 
-Result:
+The email was delivered successfully and appeared in the user’s inbox.
 
-✔ Email delivered successfully  
-✔ Message visible in Inbox  
-✔ Message trace status:
+I also confirmed that the delivery status changed from "Not Delivered" to "Delivered", indicating that mail flow was working as expected.
 
-```
-Status: Delivered
-```
-
-User confirmed successful receipt.
-
-Mail flow restored.
+This confirmed that the issue was resolved.
 
 ---
 
 # 🧠 Lessons Learned
 
-Transport rules in Exchange Online can override normal mailbox delivery behaviour.
+This lab showed me how powerful mail flow rules are in Exchange Online and how they can impact email delivery if not configured correctly.
 
-When users report missing external emails, administrators should:
+It also reinforced the importance of using Message Trace when troubleshooting missing emails, as it helps quickly identify whether a message was blocked during transport.
 
-1️⃣ Perform a **Message Trace**  
-2️⃣ Review **Mail Flow Rules**  
-3️⃣ Check **Anti-Spam Policies**  
-4️⃣ Review **Quarantine**
-
-Following a structured troubleshooting process helps identify configuration issues quickly.
+Following a structured approach made it easier to isolate the issue and identify the root cause.
 
 ---
 
 # 🛠 Skills Demonstrated
 
-- Exchange Online Administration
-- Microsoft 365 Troubleshooting
-- Mail Flow Investigation
-- Message Trace Analysis
-- Transport Rule Configuration
-- IT Incident Handling
-- Root Cause Analysis
-
----
-
-# 📂 Screenshots
-
-Evidence captured during investigation:
-
-## Screenshots
-
-### Gmail Bounce Back Error
-![Bounce Back](screenshots/gmail-bounce-back-error.png)
-
-### Mail Flow Rule Enabled
-![Rule Enabled](screenshots/mail-flow-rule-enabled.png)
-
-### Message Trace Failure
-![Message Trace](screenshots/message-trace-delivery-failure.png)
-
-### Mail Flow Rule Disabled
-![Rule Disabled](screenshots/mail-flow-rule-disabled.png)
----
-
-# 🔗 Related Skills
-
-- Microsoft 365 Administration  
-- Exchange Online  
-- Cloud Infrastructure  
-- Email Security  
-- Enterprise Troubleshooting
+- Investigated email delivery issues in Exchange Online using Message Trace  
+- Identified and analyzed mail flow (transport) rules affecting message delivery  
+- Diagnosed external email blocking based on domain conditions  
+- Resolved a mail flow issue by modifying Exchange Online configuration  
+- Applied structured troubleshooting to isolate and fix the root cause  
+- Verified resolution using test emails and delivery status checks  
 

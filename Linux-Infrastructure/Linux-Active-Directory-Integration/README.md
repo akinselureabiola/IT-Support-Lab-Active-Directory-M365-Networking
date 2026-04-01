@@ -13,25 +13,15 @@ This lab demonstrates how a Linux server can be prepared for integration with a 
 
 ---
 
-# Scenario
+## Scenario
 
-**Task Assigned**
+In this lab, I worked on preparing a Linux server for integration into an existing Active Directory environment.
 
-> Integrate a Linux server into an existing Active Directory domain environment.
+In many real-world setups, Linux servers need to authenticate against Active Directory for centralized user management.
 
-In many enterprise environments, Linux servers must authenticate against **Active Directory** for centralized identity management.
+My goal here was to make sure the Linux server could properly communicate with the Domain Controller by validating network connectivity, DNS configuration, and domain discovery.
 
-The objective of this lab was to deploy a Linux server and configure it to communicate with a **Windows Server Domain Controller** within an enterprise network.
-
-The Linux system needed to:
-
-- Connect to the internal enterprise network
-- Use the Active Directory DNS server
-- Resolve domain controller hostnames
-- Communicate with the Domain Controller
-- Prepare the system for domain authentication
-
-This setup simulates real-world infrastructure where Linux servers interact with Windows Active Directory environments.
+This is a critical step before attempting a domain join, as most integration failures are caused by DNS or connectivity issues.
 
 ---
 
@@ -171,6 +161,7 @@ Command executed:
 ```bash
 ping -c 4 192.168.10.10
 ```
+![Linux and Domain Controller Connectivity](./screenshots/linux-ping-dc.png)
 
 The screenshot displays the result of the connectivity test.
 
@@ -184,9 +175,9 @@ The infrastructure is ready for Active Directory integration
 
 ---
 
-# Domain Name Resolution
+# DNS Resolution
 
-Proper DNS resolution is required before Linux systems can authenticate against Active Directory.
+The successful hostname resolution confirms that the Linux server can resolve Active Directory DNS records and communicate with the domain environment.
 
 Command executed:
 
@@ -276,7 +267,7 @@ Successful discovery verifies that the Linux server can communicate with Active 
 
 ---
 
-# Domain Join (Next Phase)
+# Domain Join
 
 Once the Linux server successfully discovers the Active Directory domain, the next step is joining the system to the domain.
 
@@ -315,56 +306,41 @@ All checks returned successful results, indicating that the Linux server was cor
 
 # Business Impact
 
-Linux and Windows environments often coexist in enterprise infrastructure.
+In real enterprise environments, Linux servers are often required to integrate with Active Directory for centralized authentication.
 
-Integrating Linux servers with Active Directory allows organizations to:
+If DNS or connectivity is not properly configured, domain join operations will fail, leading to delays in system deployment and increased troubleshooting time.
 
-- Centralize authentication
-- Manage user access from a single directory
-- Improve security and identity governance
-- Simplify system administration
+Ensuring these prerequisites are correctly set up helps prevent authentication issues and reduces onboarding time for new systems.
 
 ---
 
 # Skills Demonstrated
 
-- Linux server deployment
-- Enterprise network configuration
-- DNS troubleshooting
-- Windows–Linux interoperability
-- Active Directory integration preparation
-- Virtual infrastructure setup
-- Network diagnostics
-- Infrastructure documentation
+- Deployed and configured a Linux server in a simulated enterprise environment  
+- Configured network settings and validated connectivity with a Windows Domain Controller  
+- Verified DNS configuration to ensure proper Active Directory service discovery  
+- Tested domain name resolution to confirm readiness for Kerberos authentication  
+- Prepared a Linux system for Active Directory integration using realmd and SSSD  
+- Performed step-by-step validation to identify and prevent potential integration issues  
 
 ---
 
 # Key Takeaway
 
-In enterprise environments, Linux servers frequently integrate with Windows Active Directory infrastructure.
+This lab showed me how critical DNS and network configuration are when integrating Linux systems with Active Directory.
 
-Before joining a Linux system to a domain, administrators must ensure:
+Before attempting a domain join, it’s important to verify connectivity, DNS resolution, and domain discovery.
 
-1. Correct network configuration
-
-2. Proper DNS resolution
-
-3. Reliable connectivity to the Domain Controller
-
-Without these prerequisites, Kerberos authentication and domain join operations will fail.
-
-This lab demonstrates the foundational infrastructure checks required before integrating Linux systems into enterprise identity environments.
+In many cases, integration issues are not caused by the domain itself, but by missing prerequisites on the Linux system.
 
 ---
 
 # Conclusion
 
-The Linux server was successfully deployed within the **bpurple.com Active Directory lab environment**.
+In this lab, I successfully prepared a Linux server for integration into an Active Directory environment.
 
-The server can now:
+I was able to validate network connectivity, configure DNS correctly, and confirm that the server could discover and communicate with the domain controller.
 
-- Communicate with the Domain Controller
-- Resolve domain resources using DNS
-- Participate in enterprise network infrastructure
+With these prerequisites in place, the system is now ready for domain join and centralized authentication using Kerberos and SSSD.
 
-This lab prepares the environment for **future Linux Active Directory authentication integration** using Kerberos and SSSD.
+This setup reflects the real-world process of preparing Linux systems for enterprise identity integration.

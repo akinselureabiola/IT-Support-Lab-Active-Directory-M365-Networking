@@ -11,20 +11,13 @@
 
 ---
 
-## Scenario
+## 🧠 Scenario
 
-**User Reported:**
+In this lab, I worked through a situation where a user reported:
 
 > “Windows updates keep failing and won’t install.”
 
-The user reported:
-
-- Repeated update failures
-- System prompting restart without completing installation
-- Error messages displayed in Update History
-- Security updates not installing
-
-The issue persisted after multiple restart attempts.
+The system kept prompting for updates, but they never completed successfully. Since this affects security and system stability, I treated it as a priority issue and started troubleshooting step by step.
 
 ---
 
@@ -38,178 +31,137 @@ The issue persisted after multiple restart attempts.
 
 ---
 
-## Initial Symptoms
+## 🔍 Initial Symptoms
 
-Observed on affected device:
+When I checked the device, I noticed:
 
-- Windows Update showing "Failed to Install"
-- Error codes displayed in Update History
-- Pending restart notifications
-- No active system crashes
+- Updates showing as “Failed to Install”  
+- Multiple failed attempts in Update History  
+- System asking for restart without completing updates  
+- No system crashes, but updates clearly not applying  
 
-System remained operational but unpatched.
+The system was still usable, but it wasn’t receiving security patches.
 
 ---
 
-## Business Impact
+## 💼 Business Impact
 
-If updates fail to install:
+Even though the system was still working, missing updates can leave it exposed to security risks.
 
-- Security vulnerabilities remain unpatched
-- Compliance risks increase
-- Device exposed to potential exploits
-- Long-term system instability possible
-
-Although device remained functional, security posture was compromised.
+In a real environment, this could lead to compliance issues or vulnerabilities if not fixed quickly.
 
 ---
 
 ## Investigation Steps
 
-### Step 1 — Verify Network Connectivity
+### Step 1 — Check Connectivity
 
-Confirmed stable internet connection.
+I first confirmed the system had a stable internet connection.
 
-Tested:
+ping google.com  
 
-    ping google.com
-
-Result: Successful
-
-Network connectivity not identified as root cause.
+The test was successful, so I ruled out network issues early on.
 
 ---
 
 ### Step 2 — Review Update History
 
-Navigated to:
+Next, I checked the Windows Update History.
 
-    Settings → Update & Security → Windows Update → View Update History
+I could see multiple failed updates, which confirmed the issue wasn’t just a one-time error.
 
-Observed repeated failures.
+![Windows Update Required](./screenshots/windows-update-required.png)
 
 ---
 
-### Step 3 — Restart Windows Update Service
+### Step 3 — Restart Update Service
 
-Opened:
+I restarted the Windows Update service (wuauserv) from Services.
 
-    services.msc
-
-Restarted:
-
-    Windows Update Service (wuauserv)
-
-Attempted update installation again.
-
-Issue persisted.
+After that, I tried installing updates again, but the issue was still there.
 
 ---
 
 ### Step 4 — Run Windows Update Troubleshooter
 
-Navigated to:
+I ran the built-in Windows Update troubleshooter to see if it could detect anything automatically.
 
-    Settings → Troubleshoot → Additional Troubleshooters → Windows Update
+It completed, but didn’t fully resolve the issue.
 
-Executed built-in troubleshooter.
-
----
-
-### Step 5 — Verify Disk Space
-
-Checked available disk space:
-
-    This PC → Local Disk (C:)
-
-Confirmed sufficient free space (greater than 15GB available).
+![Completed Windows troubleshooting](./screenshots/troubleshooting-completed.png)
 
 ---
 
-### Step 6 — Verify Windows Version
+### Step 5 — Check Disk Space
 
-Opened:
+I verified that there was enough disk space available.
 
-    winver
-
-Observed Windows version had reached End of Support.
-
-Confirmed current build no longer receiving updates.
+The system had more than enough free space, so that wasn’t the cause.
 
 ---
 
-## Root Cause
+### Step 6 — Check Windows Version
 
-The installed Windows build had reached end-of-support status.
+At this point, I checked the Windows version using:
 
-Because of this:
+winver  
 
-- Microsoft no longer delivered security patches
-- Update installation attempts repeatedly failed
-- System could not receive cumulative updates
+I noticed that the system was running an outdated version that had already reached end of support.
 
-Failure was version-related, not network or service-related.
+That explained why updates kept failing.
 
 ---
 
-## Resolution Steps
+## 🧠 Root Cause
 
-1. Confirmed unsupported Windows version.
-2. Verified official Microsoft end-of-support status.
-3. Recommended upgrade to supported version:
-   - Windows 10 22H2
-   - Or upgrade to Windows 11
-4. Backed up user data as precaution.
-5. Initiated Windows Feature Update / Upgrade process.
-6. Verified update capability restored after upgrade.
+The system was running a Windows version that was no longer supported.
+
+Because of this, it couldn’t receive new updates, and every update attempt failed.
 
 ---
 
-## Verification
+## 🛠️ Resolution
 
-After upgrade:
+To fix the issue, I:
 
-- Windows Update successfully downloaded and installed updates
-- No further installation errors observed
-- System restarted successfully
-- Update History confirmed successful installation
-- User confirmed system operating normally
+- Confirmed the Windows version was unsupported  
+- Recommended upgrading to a supported version  
+- Backed up user data before making changes  
+- Performed a Windows upgrade (to a supported version)  
 
-Patch management functionality restored.
-
----
-
-## Tools Used
-
-- Windows Update Troubleshooter
-- Services Console (services.msc)
-- Command Prompt (Administrative)
-- winver command
-- Settings → Update History
-- Microsoft Support Lifecycle Documentation
+After the upgrade, I tested Windows Update again.
 
 ---
 
-## Skills Demonstrated
+## ✅ Verification
 
-- Patch management troubleshooting
-- Windows service control
-- Version lifecycle awareness
-- OS upgrade validation
-- Endpoint security assessment
-- Structured troubleshooting methodology
-- Clear user communication
+After upgrading the system:
+
+- Updates downloaded and installed successfully  
+- No more error messages in Update History  
+- System restarted without issues  
+
+I also confirmed everything was working normally, and the user reported no further problems.
 
 ---
 
-## Key Takeaway
+## 🧑‍💻 Skills Demonstrated
 
-When Windows Updates repeatedly fail:
+- Diagnosed Windows Update failures using a structured approach  
+- Identified update issues related to OS version lifecycle  
+- Restarted and tested Windows services  
+- Used built-in troubleshooting tools to isolate the issue  
+- Performed OS upgrade to restore update functionality  
+- Verified system security and update status after resolution  
 
-1. Verify network connectivity
-2. Check Update History for error codes
-3. Restart update services
-4. Confirm disk space availability
-5. Validate Windows version support lifecycle
+---
+
+## 🧠 Key Takeaway
+
+This lab showed me that not all update issues are caused by system errors.
+
+Sometimes the problem is simply that the system is running an outdated version that is no longer supported.
+
+It also reinforced the importance of checking the basics first before going deeper into troubleshooting.
 
 

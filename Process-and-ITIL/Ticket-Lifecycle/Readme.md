@@ -13,11 +13,11 @@
 
 ## Scenario
 
-**User Reported (via Service Desk Portal):**
+In this lab, I simulated a real support ticket where a user reported:
 
 > “Cannot connect to office Wi-Fi. Others are connected.”
 
-The user submitted a ticket through the help desk portal reporting inability to connect to the corporate wireless network. Other employees in the same location were not experiencing issues.
+Since other users were not affected, this indicated that the issue was likely isolated to the user’s device rather than a network-wide problem.
 
 ---
 
@@ -33,26 +33,21 @@ The user submitted a ticket through the help desk portal reporting inability to 
 
 ## Initial Symptoms
 
-Observed during first contact:
+During initial assessment, I observed:
 
-- Wi-Fi network visible but not connecting
-- “No Internet, Secured” message displayed
-- Other users connected successfully
-- No system-wide outage reported
+- Wi-Fi network was visible but not connecting  
+- “No Internet, Secured” message displayed  
+- Other users were connected successfully  
 
-Issue appeared isolated to a single endpoint.
+This confirmed that the issue was limited to a single device.
 
 ---
 
-## Business Impact
+## 💼 Business Impact
 
-If unresolved:
+In a real environment, this issue would prevent the user from accessing email, shared drives, and internal systems.
 
-- User unable to access email, shared drives, and internal systems
-- Reduced productivity
-- Increased dependency on IT support
-
-Although impact was limited to one user, connectivity issues directly affect daily operations.
+Even though the issue affected a single user, it still impacted productivity and required timely resolution within SLA.
 
 ---
 
@@ -60,145 +55,118 @@ Although impact was limited to one user, connectivity issues directly affect dai
 
 ### 1 — Ticket Received
 
-- Ticket submitted via Service Desk Portal
-- Category assigned: Connectivity Issue
-- Priority set to: P3
-- Auto-generated ticket ID
-- Status set to: Open
+The ticket was submitted through the service desk portal and categorized as a connectivity issue.
+
+Priority was set to P3 based on impact, and the ticket was assigned for investigation.
 
 ---
 
 ### 2 — Triage and First Response
 
-Acknowledged ticket within SLA (under 15 minutes).
+I acknowledged the ticket within SLA and gathered additional information to understand the issue:
 
-Asked clarifying questions:
+- User’s current location  
+- Whether others were affected  
+- Recent changes to the device  
+- Ability to connect to other networks  
 
-- Current physical location?
-- Is anyone else affected?
-- Has the device been recently updated?
-- Are other networks connecting successfully?
+Based on the responses, I confirmed the issue was isolated to the user’s device and updated the ticket status to:
 
-Updated ticket status to:
-
-    In Progress
+In Progress
 
 ---
 
 ### 3 — Troubleshooting and Diagnosis
 
-Performed structured troubleshooting:
+I followed a structured troubleshooting approach to identify the issue.
 
-1. Confirmed Wi-Fi adapter was enabled
-2. Attempted connection to correct SSID
-3. Ran:
+First, I verified that the wireless adapter was enabled and attempted to reconnect to the correct network.
 
-    ipconfig
+Next, I checked the network configuration:
 
-Observed:
+ipconfig  
 
-    No IPv4 address assigned
+I observed that no IPv4 address was assigned, indicating a DHCP issue.
 
-4. Opened Device Manager and disabled/re-enabled wireless adapter
-5. Released and renewed DHCP lease:
+To resolve this, I:
 
-    ipconfig /release
-    ipconfig /renew
+- Disabled and re-enabled the wireless adapter  
+- Released and renewed the DHCP lease:
 
-Confirmed valid IP address assigned from DHCP server.
+ipconfig /release  
+ipconfig /renew  
+
+After this, the device received a valid IP address from the DHCP server.
 
 ---
 
 ### 4 — Communication with User
 
-- Explained troubleshooting steps clearly
-- Managed expectations
-- Provided reassurance that issue was isolated
-- Kept ticket updated with documented findings
+Throughout the process, I kept the user informed about the steps being taken and what to expect.
 
-Maintained professional communication throughout.
+I explained the issue in simple terms and ensured the user understood when testing was required on their side.
+
+Regular updates were provided in the ticket to maintain transparency.
 
 ---
 
 ### 5 — Solution Applied
 
-- Re-enabled wireless adapter
-- Renewed DHCP lease
-- Reconnected to corporate SSID
+After restoring the network configuration:
 
-User regained full network access.
+- The wireless adapter was functioning correctly  
+- A valid IP address was assigned  
+- The device successfully connected to the corporate Wi-Fi  
 
-Ticket status updated to:
+The issue was resolved and the ticket was updated to:
 
-    Resolved — Pending User Confirmation
+Resolved — Pending User Confirmation
 
 ---
 
 ### 6 — User Validation
 
-User confirmed:
+The user confirmed that:
 
-- Internet access restored
-- Shared drives accessible
-- Email functioning normally
+- Internet access was restored  
+- Shared drives were accessible  
+- Email was functioning normally  
 
-Ticket status updated to:
-
-    Closed
-
-Final resolution notes documented in ticket system.
+The ticket was then closed with final resolution notes documented.
 
 ---
 
-## Root Cause
+## 🧠 Root Cause
 
-Wireless network adapter had entered an unstable state and failed to obtain a DHCP lease.
+The wireless adapter entered an unstable state and failed to obtain a DHCP lease.
 
-This prevented the device from receiving a valid IP address required for network communication.
-
----
-
-## Verification
-
-- Valid IPv4 address assigned
-- Internet connectivity restored
-- Internal resources accessible
-- No further connection errors reported
-- User confirmed successful resolution
+Without a valid IP address, the device could not communicate with the network, resulting in loss of connectivity.
 
 ---
 
-## Tools Used
+## ✅ Verification
 
-- Service Desk Ticketing System (Simulated)
-- Device Manager
-- Command Prompt
-- ipconfig
-- Windows Network Settings
-
----
-
-## Skills Demonstrated
-
-- ITIL-based ticket lifecycle management
-- SLA adherence and prioritization
-- Structured troubleshooting methodology
-- DHCP diagnostics
-- Clear documentation practices
-- Customer communication skills
-- Incident closure workflow
+- Valid IPv4 address assigned  
+- Internet connectivity restored  
+- Internal resources accessible  
+- No further connection issues observed  
+- User confirmed successful resolution  
 
 ---
 
-## Key Takeaway
+## 🧑‍💻 Skills Demonstrated
 
-Effective IT support is not only about fixing technical issues but also about:
+- Managed an end-to-end IT support ticket using an ITIL-based workflow  
+- Performed structured troubleshooting for network connectivity issues  
+- Diagnosed DHCP-related problems using command-line tools  
+- Restored connectivity by reconfiguring network settings  
+- Communicated effectively with the user throughout the incident  
+- Documented investigation, resolution, and closure within SLA  
 
-1. Proper ticket categorization
-2. SLA compliance
-3. Clear documentation
-4. Consistent communication
-5. Structured troubleshooting
-6. Professional incident closure
+---
 
-Strong ticket lifecycle management is essential for enterprise IT service delivery.
+## 🧠 Key Takeaway
+
+This lab showed that effective IT support is not just about fixing technical issues, but also about managing the full ticket lifecycle.
+
+Clear communication, structured troubleshooting, and proper documentation are just as important as the technical solution.

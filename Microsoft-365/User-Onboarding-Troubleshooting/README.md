@@ -1,152 +1,168 @@
-# Microsoft 365 User License Troubleshooting Lab
+# 📧 Microsoft 365 User License Issue – Email Access Troubleshooting
 
-🚀 This lab simulates a real-world IT support scenario where a user is unable to access email services after account creation.
+This lab simulates a real-world IT support issue where a newly created user was unable to access email services in Microsoft 365.
 
-Instead of a standard setup lab, this exercise focuses on **diagnosing and understanding the root cause of service access issues in Microsoft 365**.
+The focus of this lab was to investigate the issue step by step, identify the root cause, and understand how licensing affects service availability.
 
 ---
 
 ## 🧠 Scenario
 
-A new user account was successfully created in Microsoft 365.
+In this lab, I worked on a simulated support case where a new user account was created successfully in Microsoft 365.
 
 However, the user reported:
 
 > "I cannot access my email after login."
 
-This lab investigates why the issue occurred and how to properly diagnose it.
+This is a common issue in Microsoft 365 environments and is often related to licensing or service configuration.
 
 ---
 
-## 🔍 Investigation Steps
+## 🔍 Investigation Process
 
-### 1. Verify User Creation
-- Navigated to **Microsoft 365 Admin Center → Users → Active Users**
-- Confirmed that the user account was successfully created
+I followed a structured troubleshooting approach, starting with account validation and moving toward licensing and service checks.
+
+### Step 1 — Verify User Creation
+
+I first confirmed that the user account was successfully created in the Microsoft 365 Admin Center.
 
 ![User Creation](./screenshots/user-created.png)
 
+This confirmed that the issue was not related to account provisioning.
+
 ---
 
-### 2. Check License Assignment
-- Opened the user profile → **Licenses and Apps**
-- Observed:
-  - Microsoft Entra ID P2 → Assigned ✅
-  - Microsoft 365 Business Standard → Not available ❌
+### Step 2 — Check License Assignment
+
+Next, I checked the user’s license configuration.
 
 ![License Unavailable](./screenshots/license-unavailable.png)
 
+I observed that:
+
+- Microsoft Entra ID P2 → Assigned  
+- No Microsoft 365 service license available  
+
+At this point, I suspected the issue might be related to missing service access.
+
 ---
 
-### 3. Attempt License Assignment
-- Attempted to assign Microsoft 365 Business Standard license
-- Not possible due to **0 available licenses**
+### Step 3 — Attempt License Assignment
+
+I attempted to assign a Microsoft 365 Business Standard license.
 
 ![License Assignment Attempt](./screenshots/license-assignment-attempt.png)
 
+However, the assignment failed because there were no available licenses in the tenant.
 
 ---
 
-### 4. Verify Mailbox in Exchange Admin Center
-- Accessed **Exchange Admin Center**
-- Navigated to: **Recipients → Mailboxes**
-- Searched for the user
+### Step 4 — Verify Mailbox Availability
 
-Result:
-- No mailbox found ❌
+To confirm whether a mailbox had been provisioned, I checked the Exchange Admin Center.
 
 ![No Mailbox](./screenshots/no-mailbox.png)
 
----
+Result:
 
-### 5. Verify Available Licenses (Tenant Level)
-- Navigated to **Billing → Licenses**
-- Observed:
-  - Microsoft Entra ID P2 → Available ✅
-  - No Microsoft 365 service licenses available ❌
+No mailbox was found for the user.
 
-  ![License Overview](./screenshots/license-overview-no-m365.png)
+This confirmed that the user did not have access to Exchange Online.
 
 ---
 
-## 🧩 Findings
+### Step 5 — Verify Tenant License Availability
 
-- User account was successfully created
-- Only Microsoft Entra ID P2 license was assigned
-- No Microsoft 365 service license (e.g., Business Standard) was available
-- No mailbox was provisioned in Exchange Admin Center
+Finally, I checked the tenant’s available licenses.
+
+![License Overview](./screenshots/license-overview-no-m365.png)
+
+I confirmed that:
+
+- Only Entra ID licenses were available  
+- No Microsoft 365 service licenses (Exchange Online) were available  
+
+This confirmed the root cause.
 
 ---
 
-## ⚠️ Root Cause
+## 🧩 Key Findings
+
+During the investigation, I observed the following:
+
+- The user account was created successfully  
+- Only an Entra ID license was assigned  
+- No Microsoft 365 service license was available in the tenant  
+- No mailbox was provisioned in Exchange Online  
+
+These findings pointed to a licensing issue affecting service availability.
+
+---
+
+## 🧩 Root Cause
 
 The issue was caused by the absence of a valid Microsoft 365 service license.
 
-Microsoft Entra ID provides identity and access management, but **does not include email services**.
+Although the user account was created successfully, only an Entra ID license was assigned, which does not include email services.
 
-Without a license that includes **Exchange Online**, a mailbox is not created.
+Because Exchange Online was not licensed, a mailbox was never provisioned.
 
 ---
 
-## 🛠️ Resolution
+## 🛠 Resolution
 
-To resolve the issue:
+To resolve the issue in a real environment, a valid Microsoft 365 license (such as Business Standard or E3) would need to be assigned to the user.
 
-- Assign a valid Microsoft 365 license (e.g., Business Standard, E3, etc.)
-- Ensure licenses are available in the tenant
-- Once assigned, mailbox provisioning will occur automatically
+This would trigger automatic mailbox provisioning in Exchange Online.
 
-> Note: In this lab, resolution could not be completed due to license unavailability.
+> Note: In this lab, the resolution could not be completed because no Microsoft 365 licenses were available in the tenant.
+
+---
+
+## ✅ Verification
+
+Although a license could not be assigned in this lab, the investigation confirmed that the issue was caused by missing Exchange Online licensing.
+
+In a real scenario, assigning a valid Microsoft 365 license would provision the mailbox and restore email access.
 
 ---
 
 ## 🎯 Outcome
 
-The user was unable to access email services due to missing licensing.
+The user was unable to access email because no Microsoft 365 service license was assigned.
 
-This lab highlights how **licensing directly impacts service availability in Microsoft 365 environments**.
+This lab demonstrates how licensing directly affects service availability in Microsoft 365 environments.
 
 ---
 
 ## 💡 Key Learnings
 
-- Creating a user does not automatically grant access to services
-- Microsoft 365 services (Exchange, Teams, SharePoint) depend on valid licenses
-- Always verify license availability during onboarding
-- Many real-world IT issues are caused by simple misconfigurations
-- Troubleshooting should start with:
-  - Identity
-  - Licensing
-  - Service availability
+This lab reinforced the importance of verifying licensing when troubleshooting access issues in Microsoft 365.
+
+It also highlighted that creating a user account does not automatically grant access to services such as Exchange Online.
+
+Many real-world issues are caused by simple configuration gaps, and checking licensing early can significantly reduce troubleshooting time.
 
 ---
 
 ## 🧑‍💻 Skills Demonstrated
 
-- Microsoft 365 Administration
-- User Onboarding
-- License Management
-- Exchange Online Verification
-- Troubleshooting & Root Cause Analysis
-- IT Support Thinking (real-world scenario)
+- Investigated user access issues in a Microsoft 365 environment  
+- Verified user account and licensing configuration  
+- Identified missing service dependencies affecting email access  
+- Validated mailbox provisioning status in Exchange Online  
+- Diagnosed licensing-related issues at both user and tenant level  
+- Applied structured troubleshooting to isolate the root cause  
 
 ---
 
 ## 🔥 Real-World Insight
 
-This type of issue is very common in IT support environments:
+This is a very common issue in IT support:
 
 > “User cannot access email”
 
-And in many cases, the root cause is not complex —  
-it is simply **missing or incorrect licensing**.
+In many cases, the root cause is not complex, but related to missing or incorrect licensing.
 
-Understanding this helps reduce resolution time and improves user experience.
+Being able to quickly identify this helps reduce resolution time and improves user experience.
 
----
-
-## 📌 Tools Used
-
-- Microsoft 365 Admin Center
-- Exchange Admin Center
-- Microsoft Entra ID

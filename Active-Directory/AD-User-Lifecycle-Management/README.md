@@ -1,11 +1,10 @@
 # Active Directory User Lifecycle Management – User Account Operations
 
-This lab was performed in a simulated enterprise environment consisting of a Windows Server 2016 Domain Controller, a Windows client workstation, and an internal network infrastructure.
+In this lab, I worked through common Active Directory user management tasks in a simulated enterprise environment.
 
-This lab demonstrates how IT administrators manage user identities within an Active Directory domain environment.  
-It simulates common helpdesk tasks including user account creation, password reset, account disablement, and security group assignment.
+The goal was to practice real helpdesk activities like creating user accounts, resetting passwords, disabling accounts, and assigning security group access.
 
-These operations represent routine identity management responsibilities performed by IT support teams in enterprise environments.
+These are the kind of tasks handled daily in IT support, especially when onboarding new users, troubleshooting login issues, or offboarding employees.
 
 ---
 
@@ -24,18 +23,15 @@ These operations represent routine identity management responsibilities performe
 
 **Task Assigned**
 
-> Simulate the lifecycle management of a user account within an Active Directory domain environment.
+In this lab, I simulated the full lifecycle of a user account in Active Directory.
 
-In enterprise environments, IT administrators regularly manage user accounts to ensure that employees can securely access corporate systems and resources.
+This includes what typically happens in a real environment:
+- creating a new user (onboarding)
+- managing access through security groups
+- resetting credentials when issues occur
+- disabling the account when access is no longer needed
 
-This lab demonstrates key Active Directory user management tasks including:
-
-- Creating a user account
-- Resetting user credentials
-- Disabling a user account
-- Assigning users to security groups
-
-These actions simulate the onboarding, maintenance, and offboarding phases of identity lifecycle management.
+The idea was to go through each stage the same way it would happen in a real IT support role.
 
 ---
 
@@ -65,7 +61,9 @@ Windows Server 2016
 
 # User Provisioning – Account Creation
 
-A new user account was created within the Active Directory domain to simulate employee onboarding.
+To simulate onboarding, I created a new user account in Active Directory.
+
+This represents a typical scenario where a new employee joins the organization and needs access to company systems.
 
 User information:
 
@@ -96,13 +94,11 @@ This confirms that the user account **Musa Ceesay** was successfully created in 
 
 ---
 
-# Password Reset Operation
+# Password Reset 
 
-A password reset was performed to simulate a common helpdesk support request.
+Next, I simulated a common support request where a user forgets their password and needs it reset.
 
-Example scenario:
-
-> User forgot their password and requires a credential reset.
+Password reset is one of the most frequent tasks in IT support, so I followed the same process used in a real environment.
 
 ### Steps
 
@@ -124,11 +120,9 @@ The password reset operation completed successfully.
 
 # Account Disable Operation
 
-The user account was disabled to simulate employee offboarding or access revocation.
+I then disabled the user account to simulate an offboarding scenario.
 
-Example scenario:
-
-> Employee has left the organization and account access must be disabled.
+This is typically done when an employee leaves the organization or when access needs to be temporarily restricted.
 
 ### Steps
 
@@ -148,13 +142,9 @@ The system confirms that the **Musa Ceesay user account was disabled**, preventi
 
 # Security Group Assignment
 
-Access to enterprise resources is typically controlled through **security groups**.
+In most environments, access to resources is not given directly to users but managed through security groups.
 
-In this lab, the user was assigned to a department security group.
-
-Security group assigned:
-Finance-Access
-
+To simulate this, I added the user to the Finance-Access group, which controls access to finance-related resources.
 
 ### Steps
 
@@ -187,7 +177,10 @@ Security groups allow administrators to control access to:
 User reported that they were unable to access the department finance shared folder.
 
 **Investigation:**  
-Investigation revealed that the user account was **not a member of the Finance-Access security group**, which controls access to the finance shared resources.
+
+During the investigation, I checked the user’s group membership and noticed they were not part of the Finance-Access group.
+
+Since access to the shared folder is controlled by this group, this explained why the user could not access the resource.
 
 **Resolution:**
 
@@ -271,62 +264,37 @@ These tools are standard utilities used by IT administrators for identity manage
 
 # Business Impact
 
-Proper management of Active Directory user accounts is essential for maintaining secure access to enterprise systems.
+In a real environment, issues like this can stop users from accessing important systems or files, which can slow down work and affect productivity.
 
-Effective identity management ensures:
-
-- secure authentication
-- controlled access to company resources
-- compliance with internal security policies
-
-Failure to properly manage user accounts can lead to:
-
-- unauthorized system access
-- security vulnerabilities
-- data exposure risks
+Managing user accounts properly helps ensure that users have the right access at the right time, while also reducing security risks.
 
 ---
 
 # Skills Demonstrated
 
-- Active Directory user management  
-- Password reset procedures  
-- Security group administration  
-- Identity lifecycle management  
-- Windows Server administration  
-- Access control implementation  
+## 🧠 Skills Demonstrated
+
+- Created and managed user accounts in Active Directory to simulate onboarding processes  
+- Performed password resets as part of a common helpdesk support scenario  
+- Disabled user accounts to simulate offboarding and access revocation  
+- Assigned users to security groups to control access to resources  
+- Used Active Directory tools (ADUC) to manage user properties and permissions  
+- Applied structured steps to verify account status, group membership, and access issues  
 
 ---
 
 # Key Takeaway
 
-User identity management is one of the most common responsibilities of IT support teams.
+This lab helped me understand how often user account management comes up in IT support.
 
-Understanding how to properly perform:
+Tasks like creating users, resetting passwords, and managing group access may seem simple, but they are critical for keeping systems secure and users productive.
 
-- user creation
-- password resets
-- account disablement
-- security group assignments
-
-is essential for maintaining secure enterprise environments.
-
-This lab demonstrates the importance of structured identity management in enterprise infrastructure.
-
-Proper user lifecycle management ensures that:
-
-- employees receive appropriate access when onboarded
-- credentials can be securely managed through password resets
-- access is revoked when employees leave the organization
-
-Using **security groups for access control** simplifies permission management and improves the overall security posture of the organization.
+It also reinforced the importance of using security groups instead of assigning permissions directly to users, as it makes access easier to manage and troubleshoot.
 
 ---
 
 # Conclusion
 
-The Active Directory user lifecycle operations were successfully simulated within the **bpurple.com domain environment**.
+Overall, this lab helped me practice the day-to-day user management tasks performed in Active Directory.
 
-This lab demonstrates the real-world identity management tasks commonly performed by IT support engineers and system administrators.
-
-The exercise reinforces the importance of structured access management within enterprise infrastructure.
+It gave me a better understanding of how onboarding, access control, and offboarding work in a real IT environment, and how important it is to manage user access properly.

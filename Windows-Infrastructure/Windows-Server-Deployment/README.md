@@ -1,5 +1,5 @@
 
-# Windows Server Deployment – Active Directory Infrastructure Setup
+# Windows Server Deployment – Active Directory Infrastructure Build
 
 ## Ticket Information
 
@@ -12,36 +12,40 @@
 
 ---
 
-# Scenario
+## Scenario
 
-**Task Assigned**
+In this lab, I simulated a real-world infrastructure task where I was required to deploy a Windows Server environment to support an Active Directory domain.
 
-> Deploy a Windows Server infrastructure to support an Active Directory lab environment.
+The goal was to build a functional domain environment that could support:
 
-The objective of this task was to deploy a Windows Server environment capable of supporting enterprise identity and authentication services.
+- User authentication  
+- DNS resolution  
+- Domain-joined client communication  
 
-The server needed to be configured with:
-
-- Static IP configuration
-- Server identity configuration
-- Active Directory Domain Services
-- DNS services
-- Domain Controller promotion
-
-A Windows client machine would later join the domain to validate authentication and network communication.
+This type of setup forms the foundation of most enterprise IT environments.
 
 ---
 
-# Environment
+## 🎯 Objectives
 
-- **Domain:** bpurple.com  
-- **Domain Controller:** DC01 (192.168.10.10)  
-- **Client Machine:** CLIENT01 (192.168.10.20)  
-- **Server OS:** Windows Server 2016 Standard  
-- **Client OS:** Windows 10  
-- **Virtualization Platform:** Oracle VirtualBox  
-- **Network Type:** Internal Network (intnet)  
-- **Network Range:** 192.168.10.0 / 24  
+- Deploy a Windows Server environment for Active Directory  
+- Configure static IP addressing for infrastructure stability  
+- Install and configure AD DS and DNS roles  
+- Promote the server to a Domain Controller  
+- Join a client machine to the domain  
+- Validate authentication and network communication  
+
+---
+
+## 🖥️ Environment
+
+- Domain: bpurple.com  
+- Domain Controller: DC01 (192.168.10.10)  
+- Client Machine: CLIENT01 (192.168.10.20)  
+- Server OS: Windows Server 2016 (Desktop Experience)  
+- Client OS: Windows 10  
+- Virtualization: Oracle VirtualBox (Internal Network)  
+- Network Range: 192.168.10.0/24  
 
 ---
 
@@ -53,9 +57,9 @@ The lab environment consists of a Windows Server Domain Controller and a Windows
 
 ---
 
-# Infrastructure Overview
+## 🏗️ Infrastructure Overview
 
-The virtual lab environment consists of two machines running inside VirtualBox.
+The lab environment consists of a Domain Controller and a client machine configured within the same network to simulate a typical enterprise setup.
 
 ### Domain Controller
 
@@ -115,9 +119,11 @@ DC02
 
 ---
 
-# Static IP Configuration
+## ⚙️ Static IP Configuration
 
-Infrastructure servers must use static IP addresses to ensure reliable service availability.
+I configured a static IP address on the server to ensure consistent availability of critical services such as DNS and Active Directory.
+
+Using DHCP for a Domain Controller can lead to service disruptions, so static addressing is required in enterprise environments.
 
 IP Address: 192.168.10.10  
 Subnet Mask: 255.255.255.0  
@@ -132,51 +138,50 @@ ipconfig /all
 
 ---
 
-# Server Roles
+## 🧩 Server Roles Installed
 
-The server was prepared to host infrastructure services.
+I installed the following roles to support enterprise identity services:
 
-Roles installed:
+- Active Directory Domain Services (AD DS)  
+- DNS Server  
 
-Active Directory Domain Services  
-DNS Server  
+These roles enable:
 
-These services provide:
-
-- Domain authentication
-- Directory services
-- Name resolution for domain resources
+- Centralized authentication  
+- Directory management  
+- Name resolution within the domain  
 
 ![Server Manager](./screenshots/server-manager.png)
 
 ---
 
-# Active Directory Domain Deployment
+## 🚀 Domain Controller Promotion
 
-The server was promoted to a **Domain Controller** for the domain:
+I promoted the server to a Domain Controller for the domain:
 
 bpurple.com
 
-This process installed and configured:
+This process configured:
 
-- Active Directory Domain Services
-- DNS integration
-- Domain authentication infrastructure
+- Active Directory Domain Services  
+- Integrated DNS  
+- Domain authentication infrastructure  
 
-After promotion, the server became the primary authentication authority for the lab environment.
+After promotion, the server became the central authority for authentication and directory services in the environment.
 
 ---
 
 # Client Machine Deployment
 
-A Windows 10 client machine was deployed within the same internal network.
+## 💻 Client Machine Deployment
 
-IP Address: 192.168.10.20  
-DNS Server: 192.168.10.10  
+I configured a  Windows 10 client machine was within the same network and joined it to the domain.
 
-The client machine was then joined to the domain:
+This allowed validation of:
 
-bpurple.com
+- Domain authentication  
+- DNS resolution  
+- Network communication with the Domain Controller  
 
 ![Client Domain Join](./screenshots/client-domain-joined.png)
 
@@ -201,46 +206,45 @@ ipconfig /all
 
 ---
 
-# Domain Authentication Validation
+## 🔐 Domain Authentication Validation
 
-A domain user account was created in Active Directory.
+To verify the environment, I created  and tested a domain user account.
 
 Example user:
 
-bpurple\john
+bpurple\john  
 
-The user successfully authenticated from CLIENT01.
+The user successfully logged in from CLIENT01.
 
 This confirmed:
 
-- DNS resolution working
-- Domain controller communication
-- Active Directory authentication functional
+- Domain authentication was working  
+- DNS resolution was functional  
+- Communication with the Domain Controller was successful  
 
 ---
 
-# Verification
+## ✅ Verification
 
-Server validation:
+I ensured the following checks were performed to validate the deployment:
 
-DC01.bpurple.com  
-192.168.10.10  
-Active Directory operational  
-DNS operational  
+Server:
+- Domain Controller operational  
+- DNS service running  
+- Domain reachable (DC01.bpurple.com)  
 
-Client validation:
+Client:
+- Successfully joined to domain  
+- Domain login successful  
+- DNS resolution working  
 
-CLIENT01 domain joined  
-Domain login successful  
-DNS resolution successful  
+Connectivity Test:
 
-Connectivity test:
-
-ping dc01.bpurple.com
+ping dc01.bpurple.com  
 
 Result:
 
-Reply from 192.168.10.10
+Reply from 192.168.10.10  
 
 ---
 
@@ -276,56 +280,45 @@ Reply from 192.168.10.10
 
 ---
 
-# Business Impact
+## 💼 Business Impact
 
-Deploying this infrastructure enables the lab environment to simulate real enterprise scenarios including:
+In a real environment, this infrastructure would serve as the foundation for:
 
-- Active Directory identity management
-- DNS resolution troubleshooting
-- User authentication
-- Access control
-- Group policy deployment
-- Network service diagnostics
+- User authentication  
+- Access to shared resources  
+- Group Policy enforcement  
+- Network service management  
 
----
-
-# Skills Demonstrated
-
-- Windows Server deployment
-- Virtual infrastructure setup
-- Static IP configuration
-- Active Directory domain configuration
-- DNS infrastructure deployment
-- Domain client integration
-- Enterprise network architecture
-- Infrastructure documentation
+Without a properly configured Domain Controller, users would be unable to log in, access resources, or operate within the corporate network.
 
 ---
 
-# Key Takeaway
+## 🧑‍💻 Skills Demonstrated
 
-Before troubleshooting identity or networking issues in enterprise environments, a properly configured infrastructure must exist.
-
-Deploying a Windows Server environment with Active Directory and DNS provides the foundation for:
-
-- Identity management
-- Authentication services
-- Network service management
-- Enterprise IT operations
+- Set up a Windows Server from scratch and prepared it for an Active Directory environment  
+- Configured a static IP to ensure the server remained stable and reachable  
+- Installed and configured Active Directory Domain Services (AD DS) and DNS  
+- Promoted the server to a Domain Controller  
+- Joined a Windows client machine to the domain  
+- Tested and confirmed that authentication and DNS were working properly  
+- Built a complete lab environment that can be used for further troubleshooting and simulations  
 
 ---
 
-# Conclusion
+## 🧠 Key Takeaway
 
-A Windows Server infrastructure was successfully deployed and configured as the Domain Controller for the **bpurple.com** environment.
+One thing this lab reinforced for me is that you can’t troubleshoot Active Directory or network issues without having a solid foundation in place.
 
-The server now provides directory services, DNS resolution, and authentication capabilities for domain clients.
+Setting up a proper Domain Controller with DNS is what everything else depends on. If this part isn’t configured correctly, nothing else in the environment will work as expected.
 
-This lab forms the foundational infrastructure required for future scenarios involving:
+---
 
-- Active Directory troubleshooting
-- Access control management
-- Group Policy configuration
-- DNS and DHCP diagnostics
+## 🧠 Conclusion
 
-This deployment reflects a **real-world infrastructure setup commonly implemented by system administrators and IT support engineers.**
+In this lab, I set up a Windows Server and configured it as the Domain Controller for the bpurple.com environment.
+
+I validated the setup by joining a client machine to the domain and confirming that authentication and DNS were working correctly.
+
+This environment now serves as the foundation for all the other labs I’ve built, including troubleshooting Active Directory, DNS, DHCP, and access-related issues.
+
+Overall, this gave me a clearer understanding of how enterprise environments are structured and how everything connects together.

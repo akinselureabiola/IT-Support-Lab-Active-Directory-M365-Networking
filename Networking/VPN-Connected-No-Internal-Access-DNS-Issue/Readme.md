@@ -1,4 +1,4 @@
-# VPN Connected but Cannot Access Shared Drives
+# 🔧 VPN Connected but No Access to Shared Drives – Troubleshooting Lab
 
 ## Ticket Information
 
@@ -13,23 +13,15 @@
 
 ## Scenario
 
-**User Reported:**
+In this lab, I worked on a simulated support case where a remote user reported:
 
 > “VPN connects but I can’t access shared drives.”
 
-When attempting to access internal resources, the user received:
+Although the VPN client showed as connected, the user was unable to access internal resources such as:
 
-    Network path not found
+\\DC01\Finance-Share  
 
-VPN client showed status:
-
-    Connected
-
-However, internal shared drives such as:
-
-    \\DC01\Finance-Share
-
-were inaccessible.
+This suggested that the issue was not with the VPN connection itself, but with internal network access.
 
 ---
 
@@ -47,24 +39,24 @@ were inaccessible.
 
 ## Initial Symptoms
 
-After VPN connection:
+After connecting to the VPN, I tested connectivity:
 
-    ping 192.168.10.10
-    ping dc01.bpurple.com
-
-Result:
-
-    Request timed out
-
-Attempting to open:
-
-    \\DC01\Finance-Share
+ping 192.168.10.10  
+ping dc01.bpurple.com  
 
 Result:
 
-    Network path not found
+Request timed out  
 
-VPN connection appeared active but internal network communication failed.
+Attempting to access:
+
+\\DC01\Finance-Share  
+
+Result:
+
+Network path not found  
+
+This confirmed that although the VPN showed as connected, the client could not reach internal resources.
 
 ---
 
@@ -89,11 +81,15 @@ This issue directly impacted remote operations.
 
 ---
 
+## 🔍 Investigation Process
+
+I followed a structured troubleshooting approach, starting with VPN validation and then checking connectivity and DNS configuration.
+
 ## Investigation Steps
 
 ### Step 1 — Validate VPN Connection
 
-Confirmed VPN client status:
+I confirmed VPN client status:
 
     Connected
 
@@ -103,7 +99,9 @@ Verified that the client received a VPN-assigned IP address.
 
 ### Step 2 — Test Internal Network Connectivity
 
-Executed:
+This indicated that the issue was not just DNS-related, but also affecting basic connectivity to the internal network.
+
+I executed:
 
     ping 192.168.10.10
 
@@ -117,7 +115,9 @@ This indicated internal routing or DNS issues over VPN.
 
 ### Step 3 — Test DNS Resolution
 
-Executed:
+Since hostname resolution also failed, I suspected a DNS configuration issue on the VPN client.
+
+I executed:
 
     ping dc01.bpurple.com
 
@@ -131,7 +131,7 @@ Hostname resolution failed.
 
 ### Step 4 — Inspect DNS Configuration
 
-Executed:
+I executed:
 
     ipconfig /all
 
@@ -139,53 +139,35 @@ Observed:
 
     DNS Servers . . . . . . . : 8.8.8.8
 
-External DNS detected (incorrect for domain environment).
+This indicated that external DNS was detected (incorrect for domain environment).
 
 ---
 
-## Root Cause
+## 🧠 Root Cause
 
-The VPN connection was established successfully, but the client was using an external DNS server:
+The VPN connection was successfully established, but the client was using an external DNS server (8.8.8.8) instead of the internal domain DNS.
 
-    8.8.8.8
+Because of this:
 
-Instead of the internal domain DNS:
-
-    192.168.10.10
-
-As a result:
-
-- Internal hostnames could not resolve  
+- Internal hostnames could not be resolved  
 - Domain resources were unreachable  
-- Shared drives were inaccessible  
+- Shared drives could not be accessed  
+
+This confirmed that the issue was related to DNS configuration, not the VPN connection itself.
 
 ---
 
-## Resolution Steps
+## 🛠 Resolution
 
-1. Open network adapter settings:
+To resolve the issue, I updated the DNS settings on the VPN adapter to use the domain controller:
 
-    ncpa.cpl
+192.168.10.10  
 
-2. Navigate to VPN adapter → Properties  
-3. Open IPv4 settings  
-4. Set DNS server to:
+After reconnecting the VPN, I flushed the DNS cache:
 
-    192.168.10.10
+ipconfig /flushdns  
 
-5. Reconnect VPN  
-6. Flush DNS cache:
-
-    ipconfig /flushdns
-
-7. Retest connectivity:
-
-    ping 192.168.10.10
-    ping dc01.bpurple.com
-
-Result:
-
-    Reply from 192.168.10.10
+I then retested connectivity.
 
 ---
 
@@ -214,40 +196,57 @@ This confirms the VPN/DNS issue was resolved and a separate permissions issue re
 
 ---
 
-## Verification
+## ✅ Verification
 
-- VPN connected successfully  
-- Internal server reachable via IP  
-- Hostname resolution successful  
-- Shared folder accessible  
-- User confirmed issue resolved  
+After applying the fix:
 
-Remote access functionality restored.
+- VPN connection remained active  
+- Internal server was reachable via IP  
+- Hostname resolution was successful  
+- Shared drives became accessible  
 
----
-
-## Skills Demonstrated
-
-- VPN troubleshooting  
-- DNS configuration validation  
-- Network vs DNS issue isolation  
-- Active Directory connectivity troubleshooting  
-- Structured L1/L2 troubleshooting methodology  
-- Professional documentation practices  
+This confirmed that the issue was resolved and remote access was restored.
 
 ---
 
-## Key Takeaway
+## 🔎 Additional Observation
 
-A VPN status of **"Connected"** does not guarantee access to internal resources.
+After fixing the DNS issue, I noticed that access to the shared folder returned an “Access Denied” error.
 
-Effective troubleshooting requires:
+This indicated that:
 
-1. Validate VPN connection  
-2. Test internal IP connectivity  
-3. Test hostname resolution  
-4. Confirm DNS configuration  
-5. Check access permissions  
+- Network connectivity was restored  
+- DNS resolution was working  
+- The remaining issue was related to permissions  
+
+This helped separate network issues from access control issues during troubleshooting.
+
+---
+
+## 💼 Business Impact
+
+In a real environment, this issue would prevent remote users from accessing internal resources such as shared drives.
+
+This could delay work, disrupt collaboration, and increase support requests, especially for teams relying on VPN access.
+
+---
+
+## 🧑‍💻 Skills Demonstrated
+
+- Diagnosed VPN connectivity issues in a domain environment  
+- Identified DNS misconfiguration affecting remote access  
+- Differentiated between network, DNS, and permission-related issues  
+- Used command-line tools to validate connectivity and resolution  
+- Restored access by correcting DNS configuration  
+- Applied structured troubleshooting to isolate and resolve the issue  
+
+---
+
+## 🧠 Key Takeaway
+
+This lab showed that a VPN connection showing “Connected” does not guarantee access to internal resources.
+
+Proper troubleshooting requires checking connectivity, DNS resolution, and access permissions step by step.
 
 ---
 
@@ -255,6 +254,6 @@ Effective troubleshooting requires:
 
 The issue was caused by incorrect DNS configuration on the VPN client.
 
-Updating the DNS server to the internal domain controller restored connectivity and access to internal resources.
+Updating the DNS server to the domain controller restored connectivity and access to internal resources.
 
-This scenario reflects a real-world enterprise support issue and highlights the importance of DNS in VPN and Active Directory environments.
+This reflects a common real-world IT support scenario where DNS plays a critical role in VPN and Active Directory environments.

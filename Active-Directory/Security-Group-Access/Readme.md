@@ -13,15 +13,11 @@
 
 ## Scenario
 
-**User Reported:**
+In this lab, I simulated a support ticket where a user reported they could not access a shared company folder.
 
-> “I can’t access the shared company folder.”
+When the user tried to open the folder, they received an **Access Denied** error, while other users were able to access it without any issues.
 
-When attempting to open the shared folder, the user received:
-
-    Access Denied
-
-Other users were able to access the folder successfully.
+This is a common access control issue in Active Directory environments, usually related to permissions or group membership.
 
 ---
 
@@ -54,47 +50,48 @@ Other users were able to access the folder successfully.
 
 ## Initial Symptoms
 
-On CLIENT01:
+On CLIENT01, I tried accessing the shared folder:
 
-    \\DC01\Finance-Share
+\\DC01\Finance-Share  
 
-Result:
+Result: Access Denied  
 
-    Access Denied
+![Access Denied Error](File-access-denied.png) 
 
-Connectivity validation:
+To rule out network or DNS issues, I tested connectivity:
 
-    ping 192.168.10.10
-    ping dc01.bpurple.com
+ping 192.168.10.10  
+ping dc01.bpurple.com  
 
-Result: Successful  
+Both tests were successful, confirming the issue was not related to connectivity.
 
-Network and DNS were functioning correctly.
+![Successful Connectivity Test](Successful-network-connectivity.png)
 
 ---
 
 ## Business Impact
 
-Without proper access:
+From a support perspective, issues like this can slow down a user’s ability to work, especially if the folder contains important department files.
 
-- User unable to retrieve or store business files  
-- Team collaboration disrupted  
-- Potential delays in finance operations  
-- Increased support workload  
+In this case, the user was unable to access the finance shared folder, which could delay tasks and require additional support time to resolve.
 
-This issue affects productivity but is limited to a single user.
+Even though the issue affected only one user, it still impacted productivity and needed to be resolved within SLA.
 
 ---
 
 ## Investigation Steps
 
+I followed a step-by-step approach to isolate the issue, starting from basic checks and moving toward access control validation.
+
 ### Step 1 — Validate Network Connectivity
 
-Executed:
+I executed:
 
     ping 192.168.10.10
 
 Result: Successful  
+
+![Successful Connectivity Test](Successful-network-connectivity.png)
 
 Confirmed network communication with Domain Controller.
 
@@ -106,7 +103,9 @@ Accessed shared folder from another user account.
 
 Result: Successful  
 
-Confirmed that the shared folder and server were operational.
+I confirmed that the shared folder and server were operational.
+
+![Access Working for Other User](File-Access-granted.png)
 
 ---
 
@@ -125,7 +124,7 @@ Verified:
 - NTFS permissions assigned to: Finance-Access (Modify)
 - No direct user permissions configured
 
-Permissions were correctly configured at group level.
+Everything looked correct at the permission level, so I moved on to check group membership.
 
 ---
 
@@ -141,76 +140,61 @@ Navigated to:
 
 Checked membership.
 
-User was **not listed** as a member of Finance-Access.
+![User Not in Security Group](No-Group-Access.png)
+
+I noticed that the user was not listed as a member of the Finance-Access group.
+
+At this point, the root cause became clear.
 
 ---
 
 ## Root Cause
 
-The user was not a member of the security group assigned to the shared folder.
+The issue occurred because the user was not part of the Finance-Access security group, which controls access to the shared folder.
 
-Although Share and NTFS permissions were correctly configured, access was denied because the user lacked required group membership.
-
-Permission enforcement was functioning as designed.
+Even though the permissions were correctly configured, the user could not access the folder because they were missing the required group membership.
 
 ---
 
-## Resolution Steps
+## Resolution
 
-1. Opened:
+To fix the issue, I added the user to the Finance-Access security group in Active Directory.
 
-    Active Directory Users and Computers
+After making the change, I asked the user to log off and log back in so their access token could refresh.
 
-2. Located:
-
-    Finance-Access Security Group
-
-3. Added user:
-
-    john
-
-4. Saved changes.
-
-5. Instructed user to log off and log back in to refresh Kerberos authentication token.
+![User Added to Security Group](Group-Access-granted.png)
 
 ---
 
 ## Verification
 
-- User logged back into CLIENT01  
-- Accessed:
+After the user logged back in, I tested access again:
 
-    \\DC01\Finance-Share
+\\DC01\Finance-Share  
 
-- Folder opened successfully  
-- No "Access Denied" message  
-- User confirmed issue resolved  
+![Access Restored](File-Access-granted.png)
 
-Access restored successfully.
+The folder opened successfully without any errors.
+
+This confirmed that the issue was resolved and access was restored.
 
 ---
 
 ## Skills Demonstrated
 
-- Active Directory user and group management  
-- Share vs NTFS permission understanding  
-- Group-based access control design  
-- Kerberos token refresh awareness  
-- Structured troubleshooting methodology  
-- Enterprise documentation standards  
+- Managed Active Directory users and security groups to control access to shared folders  
+- Compared and verified Share and NTFS permissions to understand access behavior  
+- Used security group-based access control instead of assigning permissions directly to users  
+- Investigated and resolved an “Access Denied” issue using a structured troubleshooting approach  
+- Verified network connectivity, permissions, and group membership to identify the root cause  
+- Applied understanding of authentication and group membership updates during troubleshooting  
 
 ---
 
 ## Key Takeaway
 
-In enterprise environments, permissions should be assigned to security groups — not individual users.
+This lab reinforced how important security groups are in managing access within an Active Directory environment.
 
-When troubleshooting access issues:
+It also showed me that when troubleshooting access issues, it’s important to follow a structured approach — starting from connectivity checks and moving toward permissions and group membership.
 
-1. Confirm connectivity  
-2. Confirm share functionality  
-3. Verify Share permissions  
-4. Verify NTFS permissions  
-5. Confirm user group membership  
-
-Security group-based access control ensures scalable and manageable permission administration.
+In many cases, the issue is not the permissions themselves, but whether the user is actually part of the group that grants access.

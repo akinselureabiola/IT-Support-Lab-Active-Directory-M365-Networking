@@ -1,123 +1,122 @@
-# Outlook Email Sending Issue Troubleshooting Lab
+# 📧 Outlook Email Sending Issue – Troubleshooting Lab
 
-🚀 This lab simulates a real-world IT support scenario where a user is unable to send emails in Microsoft 365.
+This lab simulates a real-world IT support issue where a user was unable to send emails in Microsoft 365.
 
-The focus of this lab is not just setup, but **diagnosing, isolating, and resolving an email-related issue in a production-like environment**.
+The focus of this exercise was to investigate the issue step by step, identify the root cause, and restore normal email functionality.
 
 ---
 
 ## 🧠 Scenario
 
-A user reports:
+In this lab, I worked on a simulated support ticket where a user reported:
 
 > "I am unable to send emails from Outlook."
 
----
-
-## 🔍 Investigation Steps
-
-### 1. Verify User Account
-- Navigated to Microsoft 365 Admin Center
-- Confirmed user account exists and is active
+This is a common issue in Microsoft 365 environments and can be caused by account, licensing, or service-related problems.
 
 ---
 
-### 2. Check License Assignment
-- Opened **Licenses and Apps**
-- Verified Microsoft 365 license is assigned
+## 🔍 Investigation Process
+
+I followed a structured troubleshooting approach to isolate the issue, starting from basic checks and moving toward service-level validation.
+
+### Step 1 — Verify User Account
+
+I first confirmed that the user account exists and is active in the Microsoft 365 Admin Center.
+
+This ruled out account-related issues.
 
 ---
 
-### 3. Verify Mailbox
-- Accessed **Exchange Admin Center**
-- Navigated to **Recipients → Mailboxes**
-- Confirmed mailbox exists
+### Step 2 — Check License Assignment
+
+Next, I checked whether the user had a valid Microsoft 365 license assigned.
+
+The license was present, so I proceeded to verify the services included in the license.
 
 ---
 
-### 4. Test Email via Outlook Web (OWA)
-- Logged in via https://outlook.office.com
-- Attempted to send email
+### Step 3 — Verify Mailbox Availability
+
+I opened the Exchange Admin Center and checked:
+
+Recipients → Mailboxes  
+
+The mailbox existed and was properly provisioned, confirming that the issue was not due to a missing mailbox.
+
+---
+
+### Step 4 — Test Email via Outlook Web (OWA)
+
+To rule out client-side issues, I tested sending an email using Outlook Web (OWA).
+
+The issue persisted, confirming that it was not related to the Outlook desktop application.
 
 ---
 
 ## 💥 Issue Simulation
 
-To simulate the issue:
-
-- Disabled **Exchange Online** under the user’s license
+To replicate the issue, I disabled the Exchange Online service under the user’s license.
 
 Result:
-- User was unable to send emails ❌
+
+The user was unable to send emails.
 
 ---
 
 ## 🧩 Root Cause
 
-The issue was caused by **Exchange Online being disabled** in the user’s license.
+The issue was caused by Exchange Online being disabled within the user’s license.
 
-Without Exchange Online:
-- Mailbox functionality is restricted
-- Sending and receiving emails is not possible
+Without Exchange Online enabled, the mailbox cannot send or receive emails, even though the account and license appear valid.
 
 ---
 
-## 🛠️ Resolution
+## 🛠 Resolution
 
-- Re-enabled **Exchange Online** in user license
-- Waited for service to reapply
-- Retested email functionality
+To resolve the issue, I re-enabled Exchange Online in the user’s license.
 
-Result:
-- Email sending restored successfully ✅
+After allowing time for the changes to apply, I tested email functionality again.
 
 ---
 
-## 🎯 Outcome
+## ✅ Verification
 
-The issue was resolved by restoring the required service dependency.
+After re-enabling Exchange Online, I sent a test email using Outlook Web.
+
+The email was delivered successfully, confirming that sending functionality had been restored.
+
+This verified that the issue was resolved.
 
 ---
 
 ## 💡 Key Learnings
 
-- Email functionality depends on **Exchange Online**
-- Licensing directly affects user access to services
-- Outlook Web (OWA) is a powerful troubleshooting tool
-- Always verify:
-  - User account
-  - License assignment
-  - Service status
-- Many issues are caused by **misconfiguration, not system failure**
+This lab reinforced how closely email functionality in Microsoft 365 depends on service configuration within user licenses.
+
+It also showed the importance of testing with Outlook Web (OWA) to rule out client-side issues.
+
+Most importantly, it highlighted that many email issues are caused by simple configuration problems rather than system failures.
 
 ---
 
 ## 🧑‍💻 Skills Demonstrated
 
-- Microsoft 365 Administration  
-- Exchange Online Management  
-- Outlook Troubleshooting  
-- License Management  
-- Root Cause Analysis  
-- IT Support Workflow  
-
----
-
-## 📌 Tools Used
-
-- Microsoft 365 Admin Center  
-- Exchange Admin Center  
-- Outlook Web (OWA)  
+- Investigated email sending issues in a Microsoft 365 environment  
+- Verified user account, mailbox, and licensing configuration  
+- Identified service-level issues within Microsoft 365 licensing  
+- Diagnosed email issues using Outlook Web (OWA)  
+- Restored functionality by correcting license configuration  
+- Applied structured troubleshooting to isolate and resolve the issue  
 
 ---
 
 ## 🔥 Real-World Insight
 
-This is a very common IT support issue:
+This is a common issue in IT support:
 
 > “User cannot send email”
 
-And in many cases, the root cause is not complex —  
-it is simply a **missing or misconfigured service within the license**.
+In many cases, the root cause is not complex, but related to missing or misconfigured services within a license.
 
-Understanding this helps reduce resolution time and improves user experience.
+Being able to quickly identify this helps reduce downtime and improves user experience.

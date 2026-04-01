@@ -11,20 +11,13 @@
 
 ---
 
-## Scenario
+## 🧠 Scenario
 
-**User Reported:**
+In this lab, I worked through a common IT support issue where a user reported:
 
 > “My computer is extremely slow and keeps freezing.”
 
-The user reported:
-
-- Applications taking long to open
-- System freezing intermittently
-- Slow login time
-- Overall degraded performance
-
-No error messages were displayed.
+From the description, it sounded like a performance issue rather than a system failure, so I approached it by checking what was consuming system resources and affecting responsiveness.
 
 ---
 
@@ -38,189 +31,129 @@ No error messages were displayed.
 
 ---
 
-## Initial Symptoms
+## 🔍 Initial Symptoms
 
-Observed on affected device:
+After logging into the system, I noticed:
 
-- High memory usage at startup
-- Multiple applications auto-launching
-- Disk usage spiking intermittently
-- System responsiveness significantly reduced
+- Slow response when opening applications  
+- High memory usage immediately after startup  
+- Multiple programs launching automatically  
+- Occasional system freezing  
 
-No hardware failure indicators present.
+There were no error messages, which suggested the issue was likely caused by system load rather than hardware failure.
 
 ---
 
-## Business Impact
+## 💼 Business Impact
 
-If unresolved:
+Although this issue affected only one user, it still had a direct impact on productivity.
 
-- Reduced employee productivity
-- Increased task completion time
-- Potential missed deadlines
-- Increased support dependency
-
-Issue impacted user efficiency but did not affect wider infrastructure.
+Tasks were taking longer to complete, and the system was unreliable, which could lead to delays in daily work if not resolved quickly.
 
 ---
 
 ## Investigation Steps
 
-### Step 1 — Validate Performance Issue
+### Step 1 — Confirm the Issue
 
-Logged into user profile and confirmed:
+I first logged into the user’s account to experience the issue directly.
 
-- Noticeable system lag
-- Delayed application response
+The system was clearly slow, so I opened Task Manager to see what was happening in the background.
 
-Opened:
+I immediately noticed high memory usage and several processes running at startup.
 
-Task Manager → Performance Tab
-
-Observed:
-
-- High memory usage
-- Several startup programs consuming resources
+![Task Manager - High Memory Usage](screenshots/CPU-and-memory-usage)
 
 ---
 
-### Step 2 — Review Startup Applications
+### Step 2 — Review Startup Programs
 
-Opened:
+Next, I checked the Startup tab in Task Manager.
 
-Task Manager → Startup Tab
+There were multiple applications set to launch automatically, including some that weren’t necessary.
 
-Identified:
+I disabled the non-essential ones to reduce the load during login.
 
-- Multiple high-impact startup applications
-- Non-essential programs running at login
-
-Disabled unnecessary startup applications.
+![Disable Unused Apps](screenshots/disabled-unused-apps.png)
 
 ---
 
-### Step 3 — Check Disk Space and Temporary Files
+### Step 3 — Clean Up Disk Space
 
-Opened:
+I then ran Disk Cleanup to remove temporary files and cached data.
 
-Disk Cleanup (cleanmgr)
+This helped free up space and reduce unnecessary system load.
 
-Removed:
-
-- Temporary files
-- System cache
-- Recycle Bin contents
-
-Confirmed sufficient free disk space available.
+![Disable Unused Apps](screenshots/disk-cleanup.png)
 
 ---
 
 ### Step 4 — Remove Unused Applications
 
-Navigated to:
+I reviewed the installed applications and found several programs that were no longer needed.
 
-Settings → Apps & Features
+I uninstalled these to reduce resource usage and improve overall performance.
 
-Uninstalled:
-
-- Unused resource-heavy applications
-- Outdated third-party software
+![Resource Usage](screenshots/resource-usage.png)
 
 ---
 
-### Step 5 — Verify System Updates
+### Step 5 — Check for Updates
 
-Opened:
+Finally, I checked for pending Windows updates.
 
-Settings → Windows Update
-
-Checked for pending updates.
-
-Installed:
-
-- Latest Windows security patches
-- Performance-related updates
-
-Restarted system after updates completed.
+There were a few updates available, so I installed them and restarted the system to apply the changes.
 
 ---
 
-## Root Cause
+## 🧠 Root Cause
 
-System slowdown was caused by:
+The slowdown was mainly caused by too many applications running at startup, along with temporary files and outdated system updates.
 
-- Excessive startup applications consuming memory
-- Accumulated temporary files
-- Outdated system patches
-
-These combined factors resulted in reduced system performance.
+All of these combined were putting unnecessary pressure on system resources.
 
 ---
 
-## Resolution Steps
+## 🛠️ Resolution
 
-1. Disabled unnecessary startup programs
-2. Cleared temporary files using Disk Cleanup
-3. Uninstalled unused applications
-4. Installed pending Windows updates
-5. Restarted device
-6. Re-tested performance
+To resolve the issue, I:
 
----
-
-## Verification
-
-After optimization:
-
-- Startup time significantly improved
-- Applications launched faster
-- CPU and memory usage normalized
-- No system freezes observed
-- User confirmed noticeable performance improvement
-
-System performance restored successfully.
+- Disabled unnecessary startup programs  
+- Cleared temporary files using Disk Cleanup  
+- Removed unused applications  
+- Installed pending Windows updates  
+- Restarted the system and tested performance  
 
 ---
 
-## Tools Used
+## ✅ Verification
 
-- Task Manager (Performance & Startup Tabs)
-- Disk Cleanup (cleanmgr)
-- Settings → Apps & Features
-- Windows Update
+After making these changes, I checked the system again:
 
----
+- Startup time improved noticeably  
+- Applications opened faster  
+- Memory usage was lower  
+- No freezing or lag observed  
 
-## Screenshots
-
-## Screenshots (Evidence)
-
-### High Memory Usage
-![Task Manager - High Memory Usage](screenshots/task-manager-memory.png)
-
-### Startup Programs Impact
-![Startup Programs](screenshots/startup-impact.png)
+The user also confirmed that the system was running much smoother.
 
 ---
 
-## Skills Demonstrated
+## 🧑‍💻 Skills Demonstrated
 
-- Windows OS performance troubleshooting
-- Resource usage monitoring (CPU / Memory / Disk)
-- Startup optimization
-- Disk cleanup and storage management
-- Patch management validation
-- Structured desktop support workflow
-- End-user communication and education
+- Diagnosed a slow system by checking real-time resource usage  
+- Identified unnecessary startup programs affecting performance  
+- Performed system cleanup to improve responsiveness  
+- Managed installed applications to reduce system load  
+- Applied Windows updates to improve stability  
+- Followed a structured approach to troubleshoot and resolve the issue  
 
 ---
 
-## Key Takeaway
+## 🧠 Key Takeaway
 
-Slow system performance is often caused by:
+This lab showed me that most slow computer issues aren’t caused by anything serious.
 
-1. Excessive startup applications
-2. Insufficient disk space
-3. Outdated system patches
+In many cases, it’s just a combination of too many startup programs, temporary files, and outdated updates.
 
-A structured troubleshooting approach ensures efficient diagnosis and resolution without unnecessary system reinstallation.
+Taking a simple, step-by-step approach can resolve the issue without needing to reinstall the system.
