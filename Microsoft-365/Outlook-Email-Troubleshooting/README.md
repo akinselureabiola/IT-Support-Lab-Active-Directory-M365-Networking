@@ -18,7 +18,7 @@ This is a common issue in Microsoft 365 environments and can be caused by accoun
 
 Title: User unable to send emails in Outlook
 Category: Microsoft 365 / Exchange Online
-Priority: Medium (P3)
+Priority: Medium
 Status: Resolved
 
 ## Ticket Description

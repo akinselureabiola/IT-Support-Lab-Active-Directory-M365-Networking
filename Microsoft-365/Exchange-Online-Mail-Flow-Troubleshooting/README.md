@@ -1,4 +1,4 @@
-# 📌 **Microsoft 365 Mail Flow Issue — Attachment Size Limitation**
+# Microsoft 365 Mail Flow Issue — Attachment Size Limitation
 
 ## 🧾 Overview
 
@@ -100,11 +100,11 @@ After this, the user was able to send emails successfully.
 
 ---
 
-## Key Takeaway
+## Key Learnings
 
 This scenario really helped reinforce something important:
 
-👉 Not every email issue is an Outlook problem
+Not every email issue is an Outlook problem
 
 Even when Outlook is working fine, there can still be delivery issues caused by:
 
@@ -114,7 +114,7 @@ Even when Outlook is working fine, there can still be delivery issues caused by:
 
 ---
 
-## How I’ll Approach This Going Forward
+## Real-World Insight
 
 If a user says:
 
